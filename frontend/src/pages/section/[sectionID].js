@@ -67,38 +67,13 @@ const ClickedSection = () => {
       <h1 className='text-4xl font-extrabold'>{sectionID}</h1>
       {data ? (
         <div className='flex flex-col gap-y-5'>
-          {/* KEY FACTS FIRST */}
-          <div className='flex flex-col'>
-            {keyFactsSection && keyFactsSection.map((fact, index) => (
-              <p key={index} className={`${index === 0 ? "text-2xl font-bold" : "" }`}>{fact}</p>
-            ))}
-          </div>
 
-          {/* OVERVIEW SECTION */}
           {sortedSections
-            .filter(([key]) => key === '1-Overview')
             .map(([key, value], index) => (
               <div key={index}>
                 <h2 className='text-2xl font-bold'>{key.split('-')[1]}</h2>
                 <div className='flex flex-col gap-y-1'>
-                  {value.map((paragraph, pIndex) => (
-                    <p key={pIndex}>{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-            ))
-          }
-
-          {/* REMAINING SECTIONS */}
-          {sortedSections
-            .filter(([key]) => key !== '1-Overview ')
-            .map(([key, value], index) => (
-              <div key={index}>
-                <h2 className='text-2xl font-bold'>{key.split('-')[1]}</h2>
-                <div className='flex flex-col gap-y-1'>
-                  {value.map((paragraph, pIndex) => (
-                    <p key={pIndex}>{paragraph}</p>
-                  ))}
+                    <p>{value}</p>
                 </div>
               </div>
             ))
