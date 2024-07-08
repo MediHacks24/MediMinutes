@@ -110,7 +110,7 @@ for key, value in links.items():
 # specificPageScrape('/news-room/fact-sheets/detail/hepatitis-d')
 
 # 
-scrapeArticleData('https://www.who.int/news-room/fact-sheets/detail/hepatitis-d')
+# scrapeArticleData('https://www.who.int/news-room/fact-sheets/detail/hepatitis-d')
 
 
 
