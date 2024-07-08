@@ -6,6 +6,7 @@ import Link from 'next/link';
 export default function DisplaySections() {
   const [sections, setSections] = useState([]);
 
+
   useEffect(() => {
     const fetchData = async () => {
       const querySnapshot = await getDocs(collection(db, 'project'));

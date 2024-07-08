@@ -8,6 +8,7 @@ const ClickedSection = () => {
   const { sectionID } = router.query;
   const [data, setData] = useState(null);
   const [keyFactsSection, setKeyFactsSection] = useState(null);
+  const [sortedSections, setSortedSections] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,8 +32,10 @@ const ClickedSection = () => {
     fetchData();
   }, [sectionID]);
 
+  // when we get the data from the request we can then get the keyfacts and then sort the sections
   useEffect(() => {
     extractKeyFacts();
+    sortSections();
   }, [data]);
  
   const extractKeyFacts = () => {
@@ -50,37 +53,56 @@ const ClickedSection = () => {
     }
   }
 
+  const sortSections = () => {
+    if (data) {
+      const sectionsArray = Object.entries(data)
+        .filter(([key]) => key !== 'Key Facts')
+        .sort(([a], [b]) => parseInt(a) - parseInt(b));
+      setSortedSections(sectionsArray);
+    }
+  }
+
   return (
-    <div>
+    <div className='flex flex-col p-4'>
       <h1 className='text-4xl font-extrabold'>{sectionID}</h1>
       {data ? (
         <div className='flex flex-col gap-y-5'>
-          {/* KEY FACTS FIRST*/}
+          {/* KEY FACTS FIRST */}
           <div className='flex flex-col'>
             {keyFactsSection && keyFactsSection.map((fact, index) => (
               <p key={index} className={`${index === 0 ? "text-2xl font-bold" : "" }`}>{fact}</p>
-            ))
-            }
-          </div>
-          {/* EVERYTHING EXCEPT KEY FACTS*/}
-          <ul  className='flex flex-col gap-y-5'>
-          {Object.entries(data)
-            .filter(([key]) => key !== "Key Facts") // exclude key facts to put at top only
-            .map(([key, value], index) => (
-              <li key={index}>
-                <strong>{key}:</strong> 
-                <div className='flex flex-col gap-y-1'>
-                  {value.map((value, index) => (
-                    <p key={index}>{value}</p>
-                    ))
-                  }
-                </div>
-              </li>
             ))}
-          </ul>
+          </div>
 
+          {/* OVERVIEW SECTION */}
+          {sortedSections
+            .filter(([key]) => key === '1-Overview')
+            .map(([key, value], index) => (
+              <div key={index}>
+                <h2 className='text-2xl font-bold'>{key.split('-')[1]}</h2>
+                <div className='flex flex-col gap-y-1'>
+                  {value.map((paragraph, pIndex) => (
+                    <p key={pIndex}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
 
-
+          {/* REMAINING SECTIONS */}
+          {sortedSections
+            .filter(([key]) => key !== '1-Overview ')
+            .map(([key, value], index) => (
+              <div key={index}>
+                <h2 className='text-2xl font-bold'>{key.split('-')[1]}</h2>
+                <div className='flex flex-col gap-y-1'>
+                  {value.map((paragraph, pIndex) => (
+                    <p key={pIndex}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
         </div>
       ) : (
         <p>Loading...</p>

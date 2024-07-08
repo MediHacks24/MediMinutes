@@ -76,12 +76,15 @@ def scrapeArticleData(link):
     # Extract and print the href attribute
     article_data = {}
     for article in data:
+        counter = 0
         # Find all h2 tags
         h2_tags = article.find_all('h2')
         for h2 in h2_tags:
+            counter += 1
             # Print the text of the h2 tag
             print(f'{h2.get_text()}')
-            article_data[h2.get_text()] = []
+            key = f'{counter}-{h2.get_text()}'
+            article_data[key] = []
             
             # Get the next siblings of the h2 tag until the next h2 or end of article
             for sibling in h2.find_next_siblings():
@@ -89,7 +92,7 @@ def scrapeArticleData(link):
                     print('\n')
                     break
                 if sibling.name == 'p':
-                    article_data[h2.get_text()].append(sibling.get_text())
+                    article_data[key].append(sibling.get_text())
                     print(f'{sibling.get_text()}')
     return article_data
     # Extract and print the data
