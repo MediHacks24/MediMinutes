@@ -65,10 +65,16 @@ const ClickedSection = () => {
           {/* EVERYTHING EXCEPT KEY FACTS*/}
           <ul  className='flex flex-col gap-y-5'>
           {Object.entries(data)
-            .filter(([key]) => key !== "Key Facts") 
+            .filter(([key]) => key !== "Key Facts") // exclude key facts to put at top only
             .map(([key, value], index) => (
               <li key={index}>
-                <strong>{key}:</strong> {value}
+                <strong>{key}:</strong> 
+                <div className='flex flex-col gap-y-1'>
+                  {value.map((value, index) => (
+                    <p key={index}>{value}</p>
+                    ))
+                  }
+                </div>
               </li>
             ))}
           </ul>
