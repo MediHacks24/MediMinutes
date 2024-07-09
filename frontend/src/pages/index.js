@@ -5,9 +5,11 @@ import TestComponent from "@/components/TestComponent";
 
 export default function Home() {
   return (
-    <main>
+    <main className="">
       <Navbar />
-      <DisplaySections />
+      <div className="pt-[100px]">
+        <DisplaySections />
+      </div>
     </main>
   );
 }
