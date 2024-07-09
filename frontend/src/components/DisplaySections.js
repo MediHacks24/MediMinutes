@@ -24,11 +24,12 @@ export default function DisplaySections() {
 
         <ul className='grid grid-cols-3 gap-y-3 gap-x-4 px-[4px]'>
         {sections.map((section, index) => (
-          <Link href={`/section/${section}`} className='h-[60px] p-4 bg-red-400 rounded-md'>
-          <li  key={index} className='text-center'>{section}</li>
+          <Link  key={index} href={`/section/${section}`} className='h-[60px] p-4 bg-red-400 rounded-md'>
+            <li  className='text-center'>{section}</li>
           </Link>
         ))}
       </ul>
+      
       :
       <p className='text-3xl font-bold text-center'>Loading...</p>
     }

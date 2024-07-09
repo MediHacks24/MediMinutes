@@ -7,9 +7,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <TestComponent />
       <DisplaySections />
-
     </main>
   );
 }

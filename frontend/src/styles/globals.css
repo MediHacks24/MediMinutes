@@ -9,3 +9,11 @@
     height: 300px;
     justify-items: center;
 }
+
+.calcWidthOfSection {
+    width: calc(100% - 500px);
+}
+
+.calcPageHeight {
+    height: calc(100vh - 80px);
+}
