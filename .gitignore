@@ -2,3 +2,5 @@
 /backend/*.json
 /backend/writeToDb.js
 
+# Ignore the .env file
+.env
