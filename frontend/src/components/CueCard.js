@@ -18,7 +18,7 @@ export default function CueCard({ header, body }) {
                     : 
                     <div>
                     {body.map((row, index) => (
-                        <p key={index} className='bulle'>{row}</p>
+                        <p key={index} className=''>{row}</p>
                         ))}
                     </div>
                     }
