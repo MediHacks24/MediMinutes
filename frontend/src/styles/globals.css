@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 
+@font-face {
+    font-family: 'Hanuman';
+    src: url('../../public/fonts/Hanuman-Regular.ttf') format('opentype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+* {
+    font-family: Hanuman;
+}
+
+
 .cardContainer {
     background-color: aqua;
     width: 500px;

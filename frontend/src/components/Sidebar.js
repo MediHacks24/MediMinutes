@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 //import { json } from 'react-router-dom';
 
-export default function Sidebar({ data, setCurrentSection, pageTopic }) {
+export default function Sidebar({ data, setCurrentSection, pageTopic, currentSection }) {
   const [keyArray, setKeyArray] = useState([]);
   const [progress, setProgress] = useState(0);
 
@@ -10,6 +10,14 @@ export default function Sidebar({ data, setCurrentSection, pageTopic }) {
         handleSectionChange(data[0]);
     }, [data]);
 
+    useEffect(() => {
+        for (const section of data) {
+            if (section === currentSection) {
+                setProgress(((data.indexOf(section) + 1) / data.length) * 100);
+                break;
+            }
+        }
+    }, [currentSection]);
 
   const handleSectionChange = (section) => {
     setCurrentSection(section);
@@ -26,7 +34,7 @@ export default function Sidebar({ data, setCurrentSection, pageTopic }) {
   return (
     <div className="w-[500px] flex flex-col gap-y-2 calcPageHeight border-r border-black">
       <div className="fixed left-0 bg-[#20AC58] w-5 h-[100vh] top-0"></div>
-      <div className="flex flex-col gap-y-20 pl-8 ">
+      <div className="flex flex-col gap-y-14 pl-8 ">
         <h1 className="text-4xl font-extrabold">Sections</h1>
         <ul
           className="
@@ -37,7 +45,7 @@ export default function Sidebar({ data, setCurrentSection, pageTopic }) {
             <li
               key={index}
               onClick={() => handleSectionChange(key)}
-              className="text-nowrap text-lg font-semibold cursor-pointer border-b-2 p-2 px-4 "
+              className="text-nowrap text-lg font-semibold cursor-pointer  overflow-hidden text-ellipsis border-b-2 p-2 px-4 "
             >
               {key.split("-")[1]}
             </li>

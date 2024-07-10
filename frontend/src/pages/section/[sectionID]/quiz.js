@@ -151,7 +151,7 @@ const QuizPage = () => {
           {/* Render quiz data */}
 
           {/* Render instructions */}
-          {questionIndex === -1 ? 
+          {questionIndex === -1 && 
             <div className="flex flex-col gap-y-4">
               <ul className=" list-disc flex flex-col text-2xl gap-y-2 pl-6">
                 <li> This quiz consists of 5 questions</li>
@@ -160,7 +160,7 @@ const QuizPage = () => {
               <button onClick={() => setQuestionIndex(0)} className="text-2xl greenButton w-[200px]">Start Quiz</button>
 
             </div>
-            : null
+            
           }    
 
           {/* Quiz Started */}
