@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function CueCard({ header, body }) {
-    console.log(body)
     return (
         <div className='flex flex-col gap-y-2 relative w-full'>
             <h2 className='text-2xl font-bold'>{header}</h2>
@@ -18,7 +17,7 @@ export default function CueCard({ header, body }) {
                     : 
                     <div>
                     {body.map((row, index) => (
-                        <p key={index} className='bulle'>{row}</p>
+                        <p key={index} className=''>{row}</p>
                         ))}
                     </div>
                     }

@@ -17,3 +17,40 @@
 .calcPageHeight {
     height: calc(100vh - 80px);
 }
+
+.greenButton {
+    background-color: #20AC58;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    outline: black 1px solid;
+}
+
+.greenButton:hover {
+    filter: brightness(1.1);
+    scale: 1.05;
+    transition: 0.3s;
+}
+
+.whiteButton {
+    background-color: white;
+    color: black;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    outline: black 1px solid;
+}
+
+.whiteButton:hover {
+    filter: brightness(1.1);
+    scale: 1.05;
+    transition: 0.3s;
+}
+
+.multipleChoiceOption {
+    background-color: #65327D;
+    color: white;
+}
