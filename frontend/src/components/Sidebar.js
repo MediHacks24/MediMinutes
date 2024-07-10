@@ -38,7 +38,7 @@ export default function Sidebar({ data, setCurrentSection, pageTopic, currentSec
   return (
     <div className="w-[500px] flex flex-col gap-y-2 calcPageHeight border-r border-black">
       <div className="fixed left-0 bg-[#20AC58] w-5 h-[100vh] top-0"></div>
-      <div className="flex flex-col gap-y-8 pl-8 pr-8 w-full">
+      <div className="flex flex-col gap-y-8 pt-8 pl-8 pr-8 w-full">
         <h1 className="text-4xl font-extrabold">Sections</h1>
         <ul
           className="
@@ -69,7 +69,7 @@ export default function Sidebar({ data, setCurrentSection, pageTopic, currentSec
           variant="determinate"
           value={progress}
           size={200}
-          thickness={3}
+          thickness={4}
           sx={{ color: '#20AC58', margin: '20px 0' }}
         />
       </div>
