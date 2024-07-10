@@ -172,7 +172,7 @@ const QuizPage = () => {
                   <h2 className="text-4xl h-[125px] ">{question}</h2>
                   <div className="flex flex-col gap-y-2 w-[900px]">
                     {answers.map((answer, aIndex) => (
-                      <p key={aIndex} onClick={() => handleAnswerSelection(answer, aIndex)} className={`text-2xl p-3 rounded-lg ${userAnswers[index] === answer ? "bg-blue-600 text-white" : "multipleChoiceOption" }`}>{`${String.fromCharCode(65 + aIndex)}) ${answer}`}</p>
+                      <p key={aIndex} onClick={() => handleAnswerSelection(answer, aIndex)} className={`text-2xl p-3 rounded-lg ${userAnswers[index] === answer ? "multipleChoiceSelectedOption text-white" : "multipleChoiceOption" }`}>{`${String.fromCharCode(65 + aIndex)}) ${answer}`}</p>
                     ))}
                   </div>
                 </div>
