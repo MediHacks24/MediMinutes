@@ -120,33 +120,34 @@ const QuizPage = () => {
   return (
     <div>
       {/* It was wrapped in a div because before I was rendering the nav */}
-      {/* <NavBar /> */}
-       <div className="pt-[80px] flex flex-row gap-x-12">
+      < Navbar />
+       <div className="pt-[60px] flex flex-row gap-x-12">
         
         { /* Side Bar Container */}
         <div className="items-center w-[500px] flex flex-col gap-y-2 calcPageHeight border-r border-black">
           <div className="fixed left-0 bg-[#20AC58] w-5 h-[100vh] top-0"></div>
-          <div className="flex flex-col gap-y-20 pl-8 ">
-            <h1 className="text-4xl font-extrabold">Sections</h1>
-            <ul className=" text-ellipsis whitespace-nowrap flex flex-col gap-y-2 ">
-              <Link href={`/section/${sectionID}`}>
-                <button className="bg-[#20AC58] text-white text-nowrap text-2xl font-semibold text-center p-2 px-4 rounded-lg w-full">Back to Readings</button>
-              </Link>
+          <div className="flex flex-col gap-y-8 pt-8 pl-8 pr-8 w-full ">
+            <h1 className="text-4xl font-extrabold">Questions</h1>
+            <ul className=" overflow-hidden text-ellipsis whitespace-nowrap flex flex-col pt-0 ">
+             
               {Object.keys(quizData).map((key, index) => (
                 <li
                   key={index}
                   onClick={() => handleSidebarClick(index)}
-                  className={`cursor-pointer text-nowrap text-2xl font-semibold text-cennter p-2 ${ questionIndex === index ? 'multipleChoiceOption rounded-lg' : '' }`}
+                  className={`text-nowrap text-lg font-semibold cursor-pointer  overflow-hidden text-ellipsis border-b-2 p-4 ${ questionIndex === index ? 'bg-[#65327D] rounded-lg text-white' : '' }`}
                 >
                   Question {index + 1}
                 </li>
               ))}
+            <Link href={`/section/${sectionID}`} className="pt-6">
+              <button className="bg-[#20AC58] text-white text-nowrap text-2xl font-semibold text-center p-3 px-4 rounded-lg w-full">Back to Readings</button>
+            </Link>
             </ul>
           </div>
         </div>
 
         { /* Quiz Container */}
-        <div className="flex flex-col w-[1100px] gap-y-10">
+        <div className="flex flex-col w-[1100px] gap-y-10 pt-8">
           <h1 className="text-4xl font-extrabold">{sectionID}</h1>
           {/* Render quiz data */}
 
@@ -171,7 +172,7 @@ const QuizPage = () => {
                   <h2 className="text-4xl h-[125px] ">{question}</h2>
                   <div className="flex flex-col gap-y-2 w-[900px]">
                     {answers.map((answer, aIndex) => (
-                      <p key={aIndex} onClick={() => handleAnswerSelection(answer, aIndex)} className={`text-2xl p-3 rounded-lg ${userAnswers[index] === answer ? "bg-blue-600 text-white" : "multipleChoiceOption" }`}>{`${String.fromCharCode(65 + aIndex)}) ${answer}`}</p>
+                      <p key={aIndex} onClick={() => handleAnswerSelection(answer, aIndex)} className={`text-2xl p-3 rounded-lg ${userAnswers[index] === answer ? "multipleChoiceSelectedOption text-white" : "multipleChoiceOption" }`}>{`${String.fromCharCode(65 + aIndex)}) ${answer}`}</p>
                     ))}
                   </div>
                 </div>

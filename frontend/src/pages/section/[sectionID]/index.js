@@ -82,32 +82,32 @@ const ClickedSection = () => {
   return (
     <div>
       {data ? (
-        <div className='pt-[80px]'>
+        <div className='pt-[60px]'>
           <Navbar />
-          <div className='flex flex-row gap-x-2'>
+          <div className='flex flex-row gap-x-2 '>
             <div className='flex flex-col pl-2 pr-4'>
-              <Sidebar data={headers} setCurrentSection={setCurrentSection} pageTopic={sectionID} currentSection={currentSection}/>
+              <Sidebar data={headers} setCurrentSection={setCurrentSection} pageTopic={sectionID} currentSection={currentSection} />
             </div>
 
-            <div className='flex flex-col calcWidthOfSection pt-4'>
+            <div className='flex flex-col calcWidthOfSection pt-8 '>
               <h1 className='text-4xl font-extrabold'>{sectionID}</h1>
-                <div className='flex flex-col gap-y-5 pt-[50px]'>
-                  {sortedSections
-                    .filter(([key, value]) => key === currentSection)
-                    .map(([key, value], index) => (
-                      <div key={index}>
-                        <CueCard header={key.split('-')[1]} body={value} />
-                      </div>
-                    ))}
+              <div className='flex flex-col gap-y-5 pt-[50px]'>
+                {sortedSections
+                  .filter(([key, value]) => key === currentSection)
+                  .map(([key, value], index) => (
+                    <div key={index}>
+                      <CueCard header={key.split('-')[1]} body={value} />
+                    </div>
+                  ))}
+              </div>
+              <div className='mx-auto pt-[30px]'>
+                <div className='flex flex-row gap-x-4'>
+                  <button onClick={() => handleBackClick()} className='bg-[#20AC58] text-white text-2xl font-semibold text-center p-2 px-4 rounded-lg w-full'>Back</button>
+                  <button onClick={() => handleNextClick()} className='bg-[#20AC58] text-white text-2xl font-semibold text-center p-2 px-4 rounded-lg w-full'>Next</button>
                 </div>
-                <div className='mx-auto pt-[30px]'>
-                  <div className='flex flex-row gap-x-4'>
-                    <button onClick={() => handleBackClick()} className='bg-[#20AC58] text-white text-2xl font-semibold text-center p-2 px-4 rounded-lg w-full'>Back</button>
-                    <button onClick={() => handleNextClick()} className='bg-[#20AC58] text-white text-2xl font-semibold text-center p-2 px-4 rounded-lg w-full'>Next</button>
-                  </div>
-                </div>
-                </div>
-                </div>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <p>Loading...</p>
