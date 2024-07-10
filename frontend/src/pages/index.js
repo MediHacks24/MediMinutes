@@ -5,10 +5,11 @@ import TestComponent from "@/components/TestComponent";
 
 export default function Home() {
   return (
-    <main>
+    <main className="">
       <Navbar />
-      <TestComponent />
-      < DisplaySections />
+      <div className="pt-[100px]">
+        <DisplaySections />
+      </div>
     </main>
   );
 }

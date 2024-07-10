@@ -1,13 +1,12 @@
+import json
 import requests
 from bs4 import BeautifulSoup
 
-
+# scrapes the facts from the page
 def specificPageScrape(page):
-    # URL of the website to scrape
     url = 'https://www.who.int'
 
-    # Send a GET request to the webpage
-    response = requests.get(url+page)
+    response = requests.get(page)
 
     # Check if the request was successful
     if response.status_code == 200:
@@ -31,8 +30,7 @@ def specificPageScrape(page):
     else:
         print(f"Failed to retrieve data: {response.status_code}")
         
-    
-    
+# scrapes the links from the list of articles
 def scrapePossibleOptions():
     baselink = 'https://www.who.int/news-room/fact-sheets'
     
@@ -51,16 +49,17 @@ def scrapePossibleOptions():
         # Extract and print the href attribute
         for link in links:
             if link['href'].startswith('/news-room/fact-sheets/detail/'):
-                # print(link['href'])
-                realdata[link.get_text()] = link['href']
+                betterLink = (f"{'https://www.who.int'}{link['href']}")
+                realdata[link.get_text()] = betterLink
         # Extract and print the data
-        # for item in data:
-            # print(item.get_text())
+        for item in link:
+            print(item.get_text())
         return realdata
     else:
         print(f"Failed to retrieve data: {response.status_code}")
         return {"Error": "Somethign went wrong"}
 
+# scrapes article data from the page and returns
 def scrapeArticleData(link):
 
     response = requests.get(link)
@@ -76,12 +75,15 @@ def scrapeArticleData(link):
     # Extract and print the href attribute
     article_data = {}
     for article in data:
+        counter = 0
         # Find all h2 tags
         h2_tags = article.find_all('h2')
         for h2 in h2_tags:
+            counter += 1
             # Print the text of the h2 tag
             print(f'{h2.get_text()}')
-            article_data[h2.get_text()] = []
+            key = f'{counter}-{h2.get_text()}'
+            article_data[key] = []
             
             # Get the next siblings of the h2 tag until the next h2 or end of article
             for sibling in h2.find_next_siblings():
@@ -89,37 +91,27 @@ def scrapeArticleData(link):
                     print('\n')
                     break
                 if sibling.name == 'p':
-                    article_data[h2.get_text()].append(sibling.get_text())
+                    article_data[key].append(sibling.get_text())
                     print(f'{sibling.get_text()}')
     return article_data
-    # Extract and print the data
-    # for item in data:
-        # print(item.get_text())
 
 
       
-        
-links = scrapePossibleOptions()
-# print(links)
-combined_data = {}
-for key, value in links.items():
-    print(key)
-    print(value)
-    linkData = specificPageScrape(value)
-    combined_data[key] = {value: linkData}
-# specificPageScrape('/news-room/fact-sheets/detail/hepatitis-d')
-
-# 
-# scrapeArticleData('https://www.who.int/news-room/fact-sheets/detail/hepatitis-d')
+def main():      
+    links = scrapePossibleOptions()
+    # print(links)
+    combined_data = {}
+    for key, value in links.items():
+        print(key)
+        print(value)
+        linkData = specificPageScrape(value)
+        combined_data[key] = {value: linkData}
 
 
+    with open('otherData.json', 'w') as fp:
+        json.dump(combined_data, fp)
 
-# print(combined_data)
-
-
-import json
-with open('data.json', 'w') as fp:
-    json.dump(combined_data, fp)
-
-# # f = open('data.json', 'wb')
-# # f.write(combined_data)
+main()
+# data = scrapePossibleOptions()
+# print(data)
+# scrapeArticleData("https://www.who.int/news-room/fact-sheets/detail/alcohol")

@@ -2,12 +2,19 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import Sidebar from '@/components/Sidebar';
+import Navbar from '@/components/Navbar';
+import AlternateNavbar from '@/components/AlternateNavBar';
+
+import CueCard from '@/components/CueCard';
 
 const ClickedSection = () => {
   const router = useRouter();
   const { sectionID } = router.query;
   const [data, setData] = useState(null);
-  const [keyFactsSection, setKeyFactsSection] = useState(null);
+  const [sortedSections, setSortedSections] = useState([]);
+  const [currentSection, setCurrentSection] = useState("");
+  const [headers, setHeaders] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +25,7 @@ const ClickedSection = () => {
 
           if (docSnap.exists()) {
             setData(docSnap.data());
-            console.log(docSnap.data());
+            
           } else {
             console.log('No such document!');
           }
@@ -29,62 +36,65 @@ const ClickedSection = () => {
     };
 
     fetchData();
-  }, [sectionID]);
+  }, []);
 
+  // when we get the data from the request we can then get the keyfacts and then sort the sections
   useEffect(() => {
-    extractKeyFacts();
+    sortSections();
   }, [data]);
- 
-  const extractKeyFacts = () => {
+
+
+
+  const sortSections = () => {
     if (data) {
-      for (const key of Object.keys(data)) {
-        if (key === 'Key Facts') {
-          console.log(data[key])
-          let facts = data[key][0];
-          let factsArray = [...facts.split('\n')];
-          factsArray = factsArray.filter(fact => fact !== "")
-          console.log(factsArray)
-          setKeyFactsSection(factsArray);
+      const sectionsArray = Object.entries(data)
+        .filter(([key]) => key !== 'Key Facts')
+        .sort(([a], [b]) => parseInt(a) - parseInt(b));
+      setSortedSections(sectionsArray);
+
+
+      let tempHeaderArray = []
+      for (const [key, value] of sectionsArray) {
+        if (key.toLowerCase().includes('key facts')) {
+          setCurrentSection(key);
         }
+        tempHeaderArray.push(key)
       }
+      setHeaders(tempHeaderArray);
     }
   }
 
+  // useEffect(() => {
+  //   console.log("Current section is", currentSection)
+  // }, [currentSection])
+
   return (
-    <div>
-      <h1 className='text-4xl font-extrabold'>{sectionID}</h1>
-      {data ? (
-        <div className='flex flex-col gap-y-5'>
-          {/* KEY FACTS FIRST*/}
-          <div className='flex flex-col'>
-            {keyFactsSection && keyFactsSection.map((fact, index) => (
-              <p key={index} className={`${index === 0 ? "text-2xl font-bold" : "" }`}>{fact}</p>
-            ))
-            }
-          </div>
-          {/* EVERYTHING EXCEPT KEY FACTS*/}
-          <ul  className='flex flex-col gap-y-5'>
-          {Object.entries(data)
-            .filter(([key]) => key !== "Key Facts") // exclude key facts to put at top only
-            .map(([key, value], index) => (
-              <li key={index}>
-                <strong>{key}:</strong> 
-                <div className='flex flex-col gap-y-1'>
-                  {value.map((value, index) => (
-                    <p key={index}>{value}</p>
-                    ))
-                  }
-                </div>
-              </li>
-            ))}
-          </ul>
-
-
-
+    <div className='pt-[80px]'>
+    < Navbar />
+      <div className='flex flex-row gap-x-2'>
+        <div className='flex flex-col pl-2 pr-4'>
+          < Sidebar data={headers} setCurrentSection={setCurrentSection} />
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+
+        <div className='flex flex-col calcWidthOfSection pt-4' >
+        
+          <h1 className='text-4xl font-extrabold'>{sectionID}</h1>
+        {data ? (
+            <div className='flex flex-col gap-y-5 pt-[50px]'>
+              {sortedSections
+                .filter(([key, value]) => key === currentSection)
+                .map(([key, value], index) => (
+                  <div key={index}>
+                    <CueCard header={key.split('-')[1]} body={value} />
+                  </div>
+                ))
+              }
+            </div>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
