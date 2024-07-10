@@ -29,7 +29,7 @@ export default function HomePage() {
                 <button className=' text-black font-bold py-2 px-4' style={{width: '120px', borderRadius: '12px', border: '1px solid #000000'}}>Sign Up</button>
             </div>
         </div>
-        <div style={containerStyle}>
+        <div className='flex flex-col gap-y-2 relative' style={containerStyle}>
           <div style={{ ...squareStyle, backgroundColor: '#65327D' }} />
           <div style={{ ...squareStyle, backgroundColor: 'white', border: '1px solid #000000', top: '10px', left: '10px' }} />
 
