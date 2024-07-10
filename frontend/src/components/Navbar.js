@@ -11,7 +11,7 @@ export default function Navbar() {
         <div className='flex-[2] flex flex-row gap-x-20 justify-center text-white rounded-md px-5 pb-2'>
           <Link href='/' className='text-black'>About</Link>
           <Link href='/' className='text-black'>Features</Link>
-          <Link href='/' className='text-black'>Resources</Link>
+          <Link href='/termList' className='text-black'>Categories</Link>
         </div>
         <div className='flex-[1] flex flex-row justify-end gap-x-4 text-white rounded-md px-5 pb-2'>
           <Link href='/' className='text-black'>Log In</Link>
