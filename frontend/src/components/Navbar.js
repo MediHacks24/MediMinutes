@@ -35,8 +35,8 @@ export default function Navbar() {
           )}
         </div>
         <div className='flex-[1] flex flex-row h-full gap-x-4 content-center text-white rounded-md px-5 justify-end'>
-          <Link href='/account' className='text-black py-2'>Log In</Link>
-          <Link href='/account' className='bg-[#20AC58] px-5 rounded-md py-2'>Sign In</Link>
+          <Link href='/login' className='text-black py-2'>Log In</Link>
+          <Link href='/signup' className='bg-[#20AC58] px-5 rounded-md py-2'>Sign Up</Link>
         </div>
       </div>
     </nav>
