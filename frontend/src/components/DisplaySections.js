@@ -7,7 +7,7 @@ import { CircularProgress } from "@mui/material";
 
 const mockCategories = [
   { id: "Adolescent and Child Health", items: ["Section1", "Section2"] },
-  { id: "Adult Health", items: [ "Section3", "Section3", "Section3", "Section3", "Section3", "Section3"]},
+  { id: "Adult Health", items: ["Section3", "Section3", "Section3", "Section3", "Section3", "Section3"] },
   { id: "Geriatric Health", items: ["Section4"] },
   { id: "Mental Health", items: ["Section5"] },
   { id: "Child Health1", items: ["Section1", "Section2"] },
@@ -18,18 +18,19 @@ const mockCategories = [
   { id: "Child Health6", items: ["Section1", "Section2"] },
   { id: "Child Health7", items: ["Section1", "Section2"] },
   { id: "Child Health8", items: ["Section1", "Section2"] },
+  { id: "Child Health9", items: ["Section1", "Section2"] },
+  { id: "Child Health10", items: ["Section1", "Section2"] },
 ];
 
 const mockSections = [
-   "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5",
+  "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5", "Section1", "Section2", "Section3", "Section3", "Section4", "Section5",
 ];
 
 export default function DisplaySections() {
   const [sections, setSections] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(
-    "Adolescent and Child Health"
-  );
+  const [selectedCategory, setSelectedCategory] = useState("Adolescent and Child Health");
+  const [categoryIndex, setCategoryIndex] = useState(0);
 
   useEffect(() => {
     const fetchSectionData = async () => {
@@ -53,10 +54,10 @@ export default function DisplaySections() {
       }
     };
 
-    // fetchSectionData();
-    // fetchCategoryData();
-    setSections(mockSections);
-    setCategories(mockCategories);
+    fetchSectionData();
+    fetchCategoryData();
+    // setSections(mockSections);
+    // setCategories(mockCategories);
   }, []);
 
   const memoizedCategories = useMemo(() => categories, [categories]);
@@ -66,6 +67,21 @@ export default function DisplaySections() {
     console.log(memoizedCategories);
   }, [memoizedSections, memoizedCategories]);
 
+  const handlePrevious = () => {
+    console.log(categoryIndex)
+    if (categoryIndex <= 0) {
+      return;
+    }
+    setCategoryIndex(categoryIndex - 1);
+  };
+
+  const handleNext = () => {
+    console.log(categoryIndex * 3 + 3, memoizedCategories.length)
+    if (categoryIndex * 3 + 3 <= memoizedCategories.length) {
+      setCategoryIndex(categoryIndex + 1)
+    }
+  };
+
   return (
     <div className="flex flex-col gap-y-4 calcPageHeight max-h-[100vh] w-[100vw] max-w-[100vw] overflow-hidden">
       <Navbar />
@@ -74,7 +90,7 @@ export default function DisplaySections() {
           {/* List All Sections Here */}
           <div className="min-w-[300px] flex flex-col gap-y-4 pb-8">
             <h2 className="text-2xl">Topics</h2>
-            <ul className="flex flex-col gap-y-2 overflow-y-scroll h-full">
+            <ul className="flex flex-col gap-y-2 overflow-y-scroll h-full pr-4">
               {memoizedSections.map((section, index) => (
                 <Link key={index} href={`/section/${section}`}>
                   <li className="text-lg font-semibold cursor-pointer text-nowrap overflow-hidden text-ellipsis border-b-2 p-2 rounded-md duration-200">
@@ -88,10 +104,20 @@ export default function DisplaySections() {
           {/* Right Side Container */}
           <div className="w-full flex flex-col gap-y-8">
             {/* Top Category Slider */}
-            <div className="w-fit text-nowrap flex flex-col gap-y-2 mx-auto">
-              <h2 className="text-2xl">Categories</h2>
-              <div className="w-full max-w-[800px] overflow-x-scroll">
-                <ul className="flex flex-row gap-x-4 w-max">
+            <h2 className="text-2xl text-center">Categories</h2>
+            <div className="w-fit text-nowrap flex flex-row gap-x-2 mx-auto">
+              <button
+                onClick={handlePrevious}
+                className="bg-[#20AC58] text-white text-2xl font-semibold p-2 px-4 rounded-md"
+                disabled={categoryIndex === 0}
+              >
+                {`<`}
+              </button>
+              <div className="relative overflow-hidden w-[932px]">
+                <ul
+                  className="flex transition-transform duration-300 ease-in-out gap-x-4"
+                  style={{ transform: `translateX(-${categoryIndex * 316 * 3}px)` }}
+                >
                   {memoizedCategories.map((category, index) => (
                     <li
                       onClick={() => setSelectedCategory(category.id)}
@@ -100,18 +126,25 @@ export default function DisplaySections() {
                         selectedCategory === category.id
                           ? "bg-[#20AC58] text-white"
                           : "bg-white text-black"
-                      } text-nowrap text-lg font-semibold cursor-pointer rounded-md p-2`}
+                      } text-nowrap text-lg font-semibold cursor-pointer rounded-md p-2 w-[300px] border flex-shrink-0`}
                     >
                       {category.id}
                     </li>
                   ))}
                 </ul>
               </div>
+              <button
+                onClick={handleNext}
+                className="bg-[#20AC58] text-white text-2xl font-semibold p-2 px-4 rounded-md"
+                disabled={categoryIndex > 0 && categoryIndex >= memoizedCategories.length - 5}
+              >
+              {`>`}
+              </button>
             </div>
 
             {/* Sections In Selected Category */}
             <div className="w-full">
-              <div className=" w-full">
+              <div className="w-full">
                 {memoizedCategories
                   .filter((category) => category.id === selectedCategory)
                   .map((category, index) => (
