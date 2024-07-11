@@ -11,7 +11,7 @@
 }
 
 * {
-    font-family: Hanuman;
+    font-family: Verdana;
 }
 
 ::-webkit-scrollbar {
@@ -41,7 +41,7 @@
 }
 
 .calcPageHeight {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 65px);
 }
 
 .greenButton {
@@ -101,3 +101,36 @@
     transition: 0.3s;
     cursor: pointer;
 }
+
+/* Add this CSS to your styles */
+@keyframes brainAnimation {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  .animate-brain {
+    animation: brainAnimation 0.7s ease-in-out;
+  }
+
+  .TopicHover {
+      transition: 0.3s;
+    }
+    
+    .TopicHover:hover {
+        background-color: #C47976;
+        transition: 0.3s;
+        color: white;
+    }
+  
+  
+  
+  .fontWhite {
+    color: #E1E1EA;
+  }
