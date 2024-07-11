@@ -43,3 +43,29 @@ export default function HomePage() {
   );
 }
 
+
+// return (
+//   <div className='flex flex-row w-[100vw] justify-center gap-x-4' style={{marginLeft: '100px', marginTop: '50px', fontFamily: 'Verdana'}}>
+//       <div className='flex-1 flex flex-col gap-y-2 max-w-[700px]'>
+//           <h1 className='text-6xl font-bold' style={{paddingBottom: '25px', lineHeight: 1.1, width: '700px' }}>{heading}</h1> 
+//           <h2 className='font-lighter' style={{ fontSize: 20, lineHeight: 1.5, paddingBottom: '25px', width: '700px' }}>{subheading}</h2>
+//           <div className='flex gap-x-10'>
+//               <button className='bg-[#20AC58] hover:bg-[#20AC58] text-white font-bold' style={{width: '120px', borderRadius: '12px'}}>Demo</button>
+//               <button className=' text-black font-bold py-2 px-4' style={{width: '120px', borderRadius: '12px', border: '1px solid #000000'}}>Sign Up</button>
+//           </div>
+//       </div>
+//       <div className='flex flex-col gap-y-2 relative content-center justify-center text-white rounded-md px-5 justify-end' style={containerStyle}>
+//         <div style={{ ...squareStyle, backgroundColor: '#65327D', marginRight: '20px' }} />
+//         <div style={{ ...squareStyle, backgroundColor: 'white', border: '1px solid #000000', marginTop: '10px'}} />
+//         {/* <img src="images/healthImage.jpg" alt="Image" style={{...squareStyle, border: '1px solid #000000', marginTop: '10px', marginLeft: '528px'}}/> /}
+
+//       </div>
+
+
+
+
+//       {/ <img src="images/healthImage.jpg" alt="Image" style={{width: '450px', height: '450px', position: 'absolute', borderRadius: '20px', border: '1px solid #000000', marginLeft: '750px', marginTop: '10px'}}/> /}
+//       {/ <img src="images/yellowCircle.png" alt="Image" style={{width: '80px', height: '80px', position: 'absolute', marginLeft: '750px', marginBottom: '1500px'}}/> */}
+
+//   </div>
+// );
