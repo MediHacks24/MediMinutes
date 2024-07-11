@@ -1,4 +1,6 @@
 import React from "react";
+import Link from 'next/link'
+
 
 export default function HomePage() {
   const heading = "Expand Your Health Vocabulary and Test Your Knowledge:";
@@ -29,7 +31,8 @@ export default function HomePage() {
             <button className="w-[140px] bg-[rgb(32,172,88)] hover:bg-[#20AC58] text-white font-bold rounded-xl text-lg">
               Demo
             </button>
-            <button className="w-[140px] text-black font-bold py-2 rounded-xl border border-black text-lg">Sign Up</button>
+            <Link href='/signup' className="w-[140px] bg-[rgb(32,172,88)] hover:bg-[#20AC58] text-white font-bold rounded-xl text-lg h-12 text-center content-center ">Sign Up</Link>
+
           </div>
         </div>
       </div>

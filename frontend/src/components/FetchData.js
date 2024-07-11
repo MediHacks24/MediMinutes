@@ -1,6 +1,6 @@
 // FetchData.js
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { db } from '../firebase/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
 const FetchData = () => {

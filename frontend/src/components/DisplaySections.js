@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase'; // Make sure to import your Firebase configuration
+import { db } from '../firebase/firebase'; // Make sure to import your Firebase configuration
 import { collection, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 
