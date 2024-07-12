@@ -81,9 +81,9 @@ const ClickedSection = () => {
 
   return (
     <div>
+    <Navbar />
       {data ? (
-        <div className='pt-[60px]'>
-          <Navbar />
+        <div className='pt-[65px]'>
           <div className='flex flex-row gap-x-2 '>
             <div className='flex flex-col pl-2 pr-4'>
               <Sidebar data={headers} setCurrentSection={setCurrentSection} pageTopic={sectionID} currentSection={currentSection} />

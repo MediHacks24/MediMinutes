@@ -24,7 +24,7 @@ export default function Home() {
     <main className="">
       <Navbar />
       
-      <div id="Home" className="h-[100vh] pt-[70px]">
+      <div id="Home" className="h-[100vh] pt-[65px]">
         <HomePage />
       </div>
 
