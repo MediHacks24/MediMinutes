@@ -10,8 +10,23 @@
     font-weight: normal;
 }
 
+@font-face {
+    font-family: 'Hanken Grotesk';
+    src: url('../../public/fonts/static/HankenGrotesk-Regular.ttf') format('opentype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+
+.HanumanFont {
+    font-family: 'Hanuman';
+}
+
 * {
-    font-family: Verdana;
+    /* font-family: Verdana; */
+    /* font-family: Helvetica; */
+    font-family: 'Hanken Grotesk';
+
 }
 
 ::-webkit-scrollbar {
