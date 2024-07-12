@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { db } from "../firebase"; // Make sure to import your Firebase configuration
+import { db } from "../firebase/firebase"; // Make sure to import your Firebase configuration
+
 import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import Navbar from "./Navbar";
