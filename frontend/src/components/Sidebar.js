@@ -73,9 +73,9 @@ export default function Sidebar({ data, setCurrentSection, quizTime, currentSect
         <h1 className="text-4xl font-extrabold">Sections</h1>
         <ul className="overflow-hidden text-ellipsis whitespace-nowrap flex flex-col pt-0">
           {data.filter((key) => key !== "url").map((key, index) => (
-            <div className={`${currentSection === key ? "bg-[#737487] rounded-lg text-white" : "hover:brightness-150  hover:bg-[#737487] rounded-lg "}`}>
+            <div key={index}
+            className={`${currentSection === key ? "bg-[#737487] rounded-lg text-white" : "hover:brightness-150  hover:bg-[#737487] rounded-lg "}`}>
             <li
-            key={index}
             onClick={() => handleSectionChange(key)}
             className={`text-nowrap text-lg font-semibold cursor-pointer overflow-hidden text-ellipsis p-4 `}
             >
