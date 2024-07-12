@@ -59,6 +59,11 @@
     height: calc(100vh - 65px);
 }
 
+.sidebarHeight {
+    height: calc(100vh - 180px);
+}
+
+
 .greenButton {
     background-color: #20AC58;
     color: white;

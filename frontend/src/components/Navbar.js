@@ -27,13 +27,13 @@ export default function Navbar() {
           </div>
         <div className='flex-[2] flex flex-row gap-x-20 h-full text-white rounded-md px-5 justify-center'>
           {router.pathname === '/' ? (
-            <div className='flex-[2] flex flex-row gap-x-20 h-full text-white rounded-md px-5 justify-center'>
-              <a onClick={() => scrollToSection('About')} className='fontWhite cursor-pointer text-lg'>About</a>
-              <a onClick={() => scrollToSection('Features')} className='fontWhite cursor-pointer text-lg'>Features</a>
-              <Link href='/categories' className='fontWhite text-lg'>Categories</Link>
+            <div className='flex-[2] flex flex-row gap-x-20 h-full text-white rounded-md px-5 text-lg justify-center'>
+              <a onClick={() => scrollToSection('About')} className='fontWhite cursor-pointer'>About</a>
+              <a onClick={() => scrollToSection('Features')} className='fontWhite cursor-pointer'>Features</a>
+              <Link href='/categories' className='fontWhite'>Categories</Link>
             </div>
           ) : (
-            <div className='flex-[2] flex flex-row gap-x-20 h-full text-white rounded-md px-5 justify-center'>
+            <div className='flex-[2] flex flex-row gap-x-20 h-full text-white rounded-md px-5 justify-center  text-lg'>
             <Link href="/?section=About" className='fontWhite'>About</Link>
             <Link href="/?section=Features" className='fontWhite'>Features</Link>
               <Link href='/categories' className='fontWhite'>Categories</Link>
