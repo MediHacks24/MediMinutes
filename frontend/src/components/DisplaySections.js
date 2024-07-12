@@ -54,10 +54,10 @@ export default function DisplaySections() {
       }
     };
 
-    // fetchSectionData();
-    // fetchCategoryData();
-    setSections(mockSections);
-    setCategories(mockCategories);
+    fetchSectionData();
+    fetchCategoryData();
+    // setSections(mockSections);
+    // setCategories(mockCategories);
   }, []);
 
   const memoizedCategories = useMemo(() => categories, [categories]);
