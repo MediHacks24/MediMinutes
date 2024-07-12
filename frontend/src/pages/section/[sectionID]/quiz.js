@@ -136,7 +136,7 @@ const QuizPage = () => {
             <h1 className="text-4xl font-extrabold">Questions</h1>
             <ul className=" overflow-hidden text-ellipsis whitespace-nowrap flex flex-col pt-0">
               {Object.keys(quizData).map((key, index) => (
-                <div
+                <div key={index}
                   className={`${
                     questionIndex === index
                       ? "bg-[#737487] rounded-lg text-white"
