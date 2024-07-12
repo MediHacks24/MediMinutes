@@ -86,7 +86,7 @@ export default function Sidebar({ data, setCurrentSection, quizTime, currentSect
         </ul>
 
         <div className="w-full justify-center flex relative">
-          <img src={brainImage} id="brainImage" className="w-32 h-32 absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          <img src={brainImage} id="brainImage" className="w-32 h-24 absolute z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
           <CircularProgress
             variant="determinate"
             value={progress}
