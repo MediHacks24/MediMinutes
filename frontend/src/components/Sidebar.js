@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function Sidebar({ data, setCurrentSection, pageTopic, currentSection }) {
+export default function Sidebar({ data, setCurrentSection, quizTime, currentSection }) {
   const [keyArray, setKeyArray] = useState([]);
   const [progress, setProgress] = useState(0);
   const [brainImage, setBrainImage] = useState("/images/brain1.png");
@@ -21,7 +21,7 @@ export default function Sidebar({ data, setCurrentSection, pageTopic, currentSec
       brainImageElement.classList.add("animate-brain");
       setTimeout(() => {
         brainImageElement.classList.remove("animate-brain");
-      }, 1000); // Duration of the animation
+      }, 750); // Duration of the animation
     }
   }, [progress]);
 
@@ -29,10 +29,29 @@ export default function Sidebar({ data, setCurrentSection, pageTopic, currentSec
     handleSectionChange(data[0]);
   }, [data]);
 
+
   useEffect(() => {
+    if (quizTime) {
+      setProgress(100);
+    } else {
+      for (const section of data) {
+        if (section === currentSection) {
+          setProgress(((data.indexOf(section)) / data.length) * 100);
+          break;
+        }
+      }
+    }
+  }, [data, quizTime]);
+
+
+  useEffect(() => {
+    if (quizTime) {
+      setProgress(100);
+      return;
+    }
     for (const section of data) {
       if (section === currentSection) {
-        setProgress(((data.indexOf(section) + 1) / data.length) * 100);
+        setProgress(((data.indexOf(section)) / data.length) * 100);
         break;
       }
     }
@@ -49,19 +68,20 @@ export default function Sidebar({ data, setCurrentSection, pageTopic, currentSec
   };
 
   return (
-    <div className="w-[500px] flex flex-col gap-y-2 calcPageHeight border-r border-black">
-      <div className="fixed left-0 bg-[#20AC58] w-5 h-[100vh] top-0"></div>
+    <div className="w-[500px] flex flex-col gap-y-2 calcPageHeight border-r border-black bg-[#E1E1EA]">
       <div className="flex flex-col gap-y-8 pt-8 pl-8 pr-8 w-full">
         <h1 className="text-4xl font-extrabold">Sections</h1>
         <ul className="overflow-hidden text-ellipsis whitespace-nowrap flex flex-col pt-0">
           {data.filter((key) => key !== "url").map((key, index) => (
+            <div className={`${currentSection === key ? "bg-[#737487] rounded-lg text-white" : "hover:brightness-150  hover:bg-[#737487] rounded-lg "}`}>
             <li
-              key={index}
-              onClick={() => handleSectionChange(key)}
-              className={`${currentSection === key ? "bg-[#65327D] rounded-lg text-white" : ""} text-nowrap text-lg font-semibold cursor-pointer overflow-hidden text-ellipsis border-b-2 p-4`}
+            key={index}
+            onClick={() => handleSectionChange(key)}
+            className={`text-nowrap text-lg font-semibold cursor-pointer overflow-hidden text-ellipsis p-4 `}
             >
-              {key.split("-")[1]}
+            {key.split("-")[1]}
             </li>
+            </div>
           ))}
         </ul>
 
@@ -75,12 +95,16 @@ export default function Sidebar({ data, setCurrentSection, pageTopic, currentSec
             sx={{ color: '#20AC58', margin: '20px 0' }}
           />
         </div>
+        <div className="flex flex-col text-2xl">
+          <h2 className="text-center">{Math.round(progress)}%</h2>
+          <h2 className="text-center">Complete</h2>
+        </div>
 
-        <Link className="px-0" href={`/section/${pageTopic}/quiz`}>
+        {/*<Link className="px-0" href={`/section/${pageTopic}/quiz`}>
           <button className="bg-[#20AC58] w-full h-12 text-white p-2 rounded-md">
             Take Quiz
           </button>
-        </Link>
+        </Link>*/}
       </div>
     </div>
   );
