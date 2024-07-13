@@ -61,10 +61,10 @@ export default function ReviewQuiz({quizData, userAnswers, answerKey, score, que
                     </div>
                     </div>
                 }
-                <div className='flex flex-row gap-x-6 max-w-[900px]'>
+                <div className='flex flex-row gap-x-24 max-w-[900px]'>
                 
-                    <button className="w-full hover:scale-110 duration-300 border border-black bg-[#ffffff] text-black text-2xl font-semibold p-2 px-4 rounded-md" onClick={() => handleBackClick()}>Previous question</button>
-                    <button className="w-full hover:scale-110 duration-300 border border-black bg-[#20AC58] text-white text-2xl font-semibold p-2 px-4 rounded-md" onClick={() => handleNextClick()}>Next question</button>
+                    <button className="w-full hover:scale-105 duration-300 border border-black bg-[#ffffff] text-black text-2xl font-semibold p-2 px-4 rounded-md" onClick={() => handleBackClick()}>Previous question</button>
+                    <button className="w-full hover:scale-105 duration-300 border border-black bg-[#20AC58] text-white text-2xl font-semibold p-2 px-4 rounded-md" onClick={() => handleNextClick()}>Next question</button>
 
                 </div>
     </div>

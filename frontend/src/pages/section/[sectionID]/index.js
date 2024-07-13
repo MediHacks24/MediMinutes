@@ -7,6 +7,8 @@ import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import CueCard from "@/components/CueCard";
 import QuizTime from "@/components/QuizTime";
+import { CircularProgress } from "@mui/material";
+
 
 const ClickedSection = () => {
   const router = useRouter();
@@ -103,6 +105,7 @@ const ClickedSection = () => {
                 setCurrentSection={setCurrentSection}
                 quizTime={quizTime}
                 currentSection={currentSection}
+                setQuizTime={setQuizTime}
               />
             </div>
 
@@ -150,7 +153,9 @@ const ClickedSection = () => {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className="flex justify-center items-center h-full">
+          <CircularProgress color="success" />
+        </div>
       )}
     </div>
   );
