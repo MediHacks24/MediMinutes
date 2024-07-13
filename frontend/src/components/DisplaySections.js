@@ -160,6 +160,17 @@ export default function DisplaySections() {
   const memoizedCategories = useMemo(() => categories, [categories]);
   const memoizedSections = useMemo(() => sections, [sections]);
 
+  const groupedSections = useMemo(() => {
+    return memoizedSections.reduce((acc, section) => {
+      const firstLetter = section[0].toUpperCase();
+      if (!acc[firstLetter]) {
+        acc[firstLetter] = [];
+      }
+      acc[firstLetter].push(section);
+      return acc;
+    }, {});
+  }, [memoizedSections]);
+
   useEffect(() => {
     console.log(memoizedCategories);
   }, [memoizedSections, memoizedCategories]);
@@ -189,7 +200,7 @@ export default function DisplaySections() {
   };
 
   return (
-    <div className="flex flex-col  calcPageHeight max-h-[100vh] w-[100vw] max-w-[100vw] overflow-hidden">
+    <div className="flex flex-col select-none	 calcPageHeight max-h-[100vh] w-[100vw] max-w-[100vw] overflow-hidden">
       <Navbar />
       {memoizedSections.length > 0 && memoizedCategories.length > 0 ? (
         <div className="flex flex-row gap-x-8 h-full w-full bg-white">
@@ -200,25 +211,35 @@ export default function DisplaySections() {
             }`}
           >
             <div
-            onClick={toggleSidebar}
-            className="h-20 w-14 bg-[#242638] absolute rounded-r-full top-1/2 right-[-56px] cursor-pointer flex items-center justify-center"
+              onClick={toggleSidebar}
+              className="h-20 w-14 bg-[#242638] absolute rounded-r-full top-1/2 right-[-56px] cursor-pointer flex items-center justify-center"
             >
-              <img src="/images/right-arrow.png" className={`p-3 invert ${showSideBar ? "rotate-180" : "rotate-0"}`}/>
+              <img
+                src="/images/right-arrow.png"
+                className={`p-3 invert ${
+                  showSideBar ? "rotate-180" : "rotate-0"
+                }`}
+              />
             </div>
             {showSideBar && (
               <div className="flex flex-col gap-y-6">
                 <h2 className="text-3xl">All Topics</h2>
                 <ul className="flex flex-col sidebarHeight overflow-y-scroll pr-4">
-                  {memoizedSections.map((section, index) => (
-                    <Link
-                      key={index}
-                      href={`/section/${section}`}
-                      className="rounded-md"
-                    >
-                      <li className="text-lg font-semibold cursor-pointer text-nowrap overflow-hidden text-ellipsis border-b p-2 hover:bg-[#242638] hover:text-white rounded-md">
-                        {section}
-                      </li>
-                    </Link>
+                  {Object.keys(groupedSections).map((letter) => (
+                    <div key={letter}>
+                      <h3 className="text-4xl font-bold mt-4">{letter}</h3>
+                      {groupedSections[letter].map((section, index) => (
+                        <Link
+                          key={index}
+                          href={`/section/${section}`}
+                          className="rounded-md"
+                        >
+                          <li className="text-lg font-semibold cursor-pointer text-nowrap overflow-hidden text-ellipsis border-b p-2 hover:bg-[#242638] hover:text-white rounded-md">
+                            {section}
+                          </li>
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                 </ul>
               </div>
@@ -231,7 +252,7 @@ export default function DisplaySections() {
             <div className="w-fit text-nowrap flex flex-row gap-x-2 32px] mx-auto pt-8">
               <button
                 onClick={handlePrevious}
-                className=" text-black text-2xl font-semibold p-2 px-4 rounded-md"
+                className=" text-white w-12 m-4 text-2xl font-semibold p-2 px-4 rounded-md cursor-pointer bg-[#242638] hover:bg-gray-500 duration-300 hover:scale-105"
                 disabled={categoryIndex === 0}
               >
                 {`<`}
@@ -263,7 +284,7 @@ export default function DisplaySections() {
               </div>
               <button
                 onClick={handleNext}
-                className=" text-black text-2xl font-semibold p-2 px-4 rounded-md"
+                className=" text-white w-12 m-4 text-2xl font-semibold p-2 px-4 rounded-md cursor-pointer bg-[#242638] hover:bg-gray-500 duration-300 hover:scale-105"
                 disabled={
                   categoryIndex > 0 &&
                   categoryIndex >= memoizedCategories.length - 5
@@ -300,14 +321,16 @@ export default function DisplaySections() {
                     </div>
                   ))}
               </div>
-              
-                {categories.find(element => element.id === selectedCategory)?.items.length > sectionDisplayCap && 
-                <button onClick={() => setSectionDisplayCap(sectionDisplayCap + 8)}
-                className="bg-[#20AC58] text-white text-2xl font-semibold text-center p-2 px-4 rounded-lg border border-black w-[200px] mx-auto hover:scale-110 duration-200"
-              >
-                Show More
-              </button>}
-              
+
+              {categories.find((element) => element.id === selectedCategory)
+                ?.items.length > sectionDisplayCap && (
+                <button
+                  onClick={() => setSectionDisplayCap(sectionDisplayCap + 8)}
+                  className="bg-[#20AC58] text-white text-2xl font-semibold text-center p-2 px-4 rounded-lg border border-black w-[200px] mx-auto hover:scale-110 duration-200"
+                >
+                  Show More
+                </button>
+              )}
             </div>
           </div>
         </div>
