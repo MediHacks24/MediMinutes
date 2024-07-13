@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function Sidebar({ data, setCurrentSection, quizTime, currentSection }) {
+export default function Sidebar({ data, setCurrentSection, quizTime, currentSection, setQuizTime}) {
   const [keyArray, setKeyArray] = useState([]);
   const [progress, setProgress] = useState(0);
   const [brainImage, setBrainImage] = useState("/images/brain1.png");
@@ -58,6 +58,7 @@ export default function Sidebar({ data, setCurrentSection, quizTime, currentSect
   }, [currentSection]);
 
   const handleSectionChange = (section) => {
+    setQuizTime(false);
     setCurrentSection(section);
     for (let i = 0; i < data.length; i++) {
       if (data[i] === section) {
@@ -69,9 +70,9 @@ export default function Sidebar({ data, setCurrentSection, quizTime, currentSect
 
   return (
     <div className="w-[500px] flex flex-col gap-y-2 calcPageHeight border-r border-black bg-[#E1E1EA]">
-      <div className="flex flex-col gap-y-8 pt-8 pl-8 pr-8 w-full">
+      <div className="flex flex-col gap-y-4 pt-8 pl-8 pr-8 w-full">
         <h1 className="text-4xl font-extrabold">Sections</h1>
-        <ul className="overflow-hidden text-ellipsis whitespace-nowrap flex flex-col pt-0">
+        <ul className="overflow-hidden text-ellipsis whitespace-nowrap flex flex-col pt-0 h-[400px] overflow-y-auto pb-4">
           {data.filter((key) => key !== "url").map((key, index) => (
             <div key={index}
             className={`${currentSection === key ? "bg-[#737487] rounded-lg text-white" : "hover:brightness-150  hover:bg-[#737487] rounded-lg "}`}>
@@ -79,7 +80,7 @@ export default function Sidebar({ data, setCurrentSection, quizTime, currentSect
             onClick={() => handleSectionChange(key)}
             className={`text-nowrap text-lg font-semibold cursor-pointer overflow-hidden text-ellipsis p-4 `}
             >
-            {key.split("-")[1]}
+            {key.split("-")[1] === "" ?  "Health" :  key.split("-")[1]}
             </li>
             </div>
           ))}

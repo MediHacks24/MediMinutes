@@ -124,7 +124,7 @@ const QuizPage = () => {
   const handleReviewClick = () => {
     setReviewQuiz(true);
     setQuestionIndex(0);
-  }
+  };
   return (
     <div>
       {/* It was wrapped in a div because before I was rendering the nav */}
@@ -136,17 +136,18 @@ const QuizPage = () => {
             <h1 className="text-4xl font-extrabold">Questions</h1>
             <ul className=" overflow-hidden text-ellipsis whitespace-nowrap flex flex-col pt-0">
               {Object.keys(quizData).map((key, index) => (
-                <div key={index}
+                <div
+                  key={index}
                   className={`${
                     questionIndex === index
                       ? "bg-[#737487] rounded-lg text-white"
-                      : ""
+                      : "bg-[#E1E1EA] hover:bg-[#737487] hover:brightness-150 rounded-lg "
                   }`}
                 >
                   <li
                     key={index}
                     onClick={() => handleSidebarClick(index)}
-                    className={`text-nowrap text-lg font-semibold cursor-pointer overflow-hidden text-ellipsis p-4`}
+                    className={`hover:brightness-110 text-nowrap text-lg font-semibold cursor-pointer overflow-hidden text-ellipsis p-4`}
                   >
                     Question {index + 1}
                   </li>
@@ -184,42 +185,53 @@ const QuizPage = () => {
 
           {quizFinished ? (
             <div>
-              {reviewQuiz ?
+              {reviewQuiz ? (
                 <div className="flex flex-col gap-y-8">
-
-                <ReviewQuiz quizData={quizData} userAnswers={userAnswers} answerKey={answerKey} score={quizScore} questionIndex={questionIndex} setQuestionIndex={setQuestionIndex}/>
-                <button className="w-[90%] max-w-[900px] hover:scale-110 duration-300 border border-black bg-[#ffffff] text-black text-2xl font-semibold p-2 px-4 rounded-md" onClick={() => setReviewQuiz(false)}>Finish Review</button>
+                  <ReviewQuiz
+                    quizData={quizData}
+                    userAnswers={userAnswers}
+                    answerKey={answerKey}
+                    score={quizScore}
+                    questionIndex={questionIndex}
+                    setQuestionIndex={setQuestionIndex}
+                  />
+                  <button
+                    className="w-[90%] max-w-[900px] duration-300 whiteButton text-black text-2xl font-semibold p-2 px-4 rounded-md"
+                    onClick={() => setReviewQuiz(false)}
+                  >
+                    Finish Review
+                  </button>
                 </div>
-                :
+              ) : (
                 <div className="mt-[8%] flex flex-col justify-center text-center gap-y-4 w-full">
-                <h1 className="text-5xl font-bold">Congratulations</h1>
-                <h2 className="text-2xl">You have completed the quiz</h2>
+                  <h1 className="text-5xl font-bold">Congratulations</h1>
+                  <h2 className="text-2xl">You have completed the quiz</h2>
 
-                <h2 className="">Quiz Score: {quizScore} / 5</h2>
-                <h2>{Math.round((quizScore / 5) * 100)}%</h2>
-                <div className="flex flex-col gap-y-3 items-center self-center w-[40%]">
-                  <button
-                    onClick={() => handleReviewClick()}
-                    className="w-full border border-black rounded-md font-bold text-xl text-white p-2 bg-[#20AC58] "
-                  >
-                    Review Answers
-                  </button>
-                  <button
-                    onClick={() => handleRefresh()}
-                    refresh="true"
-                    className="w-full border border-black rounded-md font-bold text-xl text-black p-2 bg-[#ffffff] "
-                  >
-                    Re-Attempt Quiz
-                  </button>
-                  <Link
-                    href={`/section/${sectionID}/`}
-                    className="w-full border border-black rounded-md font-bold text-xl text-black p-2 bg-[#ffffff] "
-                  >
-                    Back to Course
-                  </Link>
+                  <h2 className="">Quiz Score: {quizScore} / 5</h2>
+                  <h2>{Math.round((quizScore / 5) * 100)}%</h2>
+                  <div className="flex flex-col gap-y-3 items-center self-center w-[40%]">
+                    <button
+                      onClick={() => handleReviewClick()}
+                      className="w-full  rounded-md font-bold text-xl text-white p-2 bg-[#20AC58] greenButton "
+                    >
+                      Review Answers
+                    </button>
+                    <button
+                      onClick={() => handleRefresh()}
+                      refresh="true"
+                      className="w-full  rounded-md font-bold text-xl text-black p-2 bg-[#ffffff] whiteButton "
+                    >
+                      Re-Attempt Quiz
+                    </button>
+                    <Link
+                      href={`/section/${sectionID}/`}
+                      className="w-full  rounded-md font-bold text-xl text-black p-2 bg-[#ffffff] whiteButton "
+                    >
+                      Back to Course
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              }
+              )}
             </div>
           ) : (
             <div>
@@ -236,10 +248,11 @@ const QuizPage = () => {
                             onClick={() =>
                               handleAnswerSelection(answer, aIndex)
                             }
-                            className={`text-2xl p-3 rounded-lg ${
+                            className={`text-2xl p-3 rounded-lg hover:bg-[#DDD5E5] cursor-pointer
+                              ${
                               userAnswers[index] === answer
                                 ? "bg-[#DDD5E5] brightness-75"
-                                : "bg-[#DDD5E5]"
+                                : "bg-[#DDD5E5] hover:brightness-90 "
                             }`}
                           >{`${String.fromCharCode(
                             65 + aIndex
@@ -250,7 +263,7 @@ const QuizPage = () => {
                   )
               )}
               {/* Render navigation buttons */}
-              <div className="flex w-[900px] justify-between">
+              <div className="flex w-[900px] justify-between pt-4">
                 <div className="justify-start flex-1">
                   {questionIndex > 0 && (
                     <button

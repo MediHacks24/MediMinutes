@@ -3,7 +3,7 @@ import React from 'react'
 export default function CueCard({ header, body }) {
     return (
         <div className='flex flex-col gap-y-0 relative w-full'>
-            <h2 className='text-2xl font-bold'>{header}</h2>
+            <h2 className='text-2xl font-bold'>{header === "" ? "Health" : header }</h2>
 
             <div className='relative pt-[100px] h-fit mx-auto'>
                 <div className='border border-black rounded-3xl p-4 max-w-[1090px] h-full max-h-[530px] bg-[#DDD5E5] absolute top-[-20px] ml-10 transform -rotate-[9deg] w-full z-[5]'></div>
