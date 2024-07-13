@@ -5,6 +5,7 @@ import FetchData from "@/components/FetchData";
 import Navbar from "@/components/Navbar";
 import TestComponent from "@/components/TestComponent";
 import HomePage from "@/components/HomePage";
+import OurTeam from '@/components/OurTeam';
 
 export default function Home() {
   const router = useRouter();
@@ -34,9 +35,10 @@ export default function Home() {
       </div>
       
       {/* Make a Features component and render in this div */}
-      <div id="Features" className="h-[100vh] pt-[70px]">
-        <h2>Features section</h2>
+      <div id="OurTeam" className="h-[100vh] pt-[70px]">
+        <OurTeam />
       </div>
+      
     </main>
   );
 }

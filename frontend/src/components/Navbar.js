@@ -29,13 +29,13 @@ export default function Navbar() {
           {router.pathname === '/' ? (
             <div className='flex-[2] flex flex-row gap-x-20 h-full text-white rounded-md px-5 text-lg justify-center'>
               <a onClick={() => scrollToSection('About')} className='fontWhite cursor-pointer'>About</a>
-              <a onClick={() => scrollToSection('Features')} className='fontWhite cursor-pointer'>Features</a>
+              <a onClick={() => scrollToSection('OurTeam')} className='fontWhite cursor-pointer'>Our Team</a>
               <Link href='/categories' className='fontWhite'>Categories</Link>
             </div>
           ) : (
             <div className='flex-[2] flex flex-row gap-x-20 h-full text-white rounded-md px-5 justify-center  text-lg'>
             <Link href="/?section=About" className='fontWhite'>About</Link>
-            <Link href="/?section=Features" className='fontWhite'>Features</Link>
+            <Link href="/?section=OurTeam" className='fontWhite'>Our Team</Link>
               <Link href='/categories' className='fontWhite'>Categories</Link>
             </div>
           )}
