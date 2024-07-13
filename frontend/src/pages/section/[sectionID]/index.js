@@ -42,15 +42,21 @@ const ClickedSection = () => {
 
   useEffect(() => {
     sortSections();
+    console.log(data)
   }, [data]);
+
+  useEffect(() => {
+    console.log(currentSection);
+  }, [currentSection]);
 
   const sortSections = () => {
     if (data) {
       const sectionsArray = Object.entries(data)
-        .filter(([key]) => key !== "url")
+        .filter(([key, value]) => key.split("-")[1] && key.split("-")[1].trim() !== "" && value.length > 0)
         .sort(([a], [b]) => parseInt(a) - parseInt(b));
+  
       setSortedSections(sectionsArray);
-
+  
       let tempHeaderArray = [];
       for (const [key, value] of sectionsArray) {
         if (key.toLowerCase().includes("key facts")) {
@@ -61,6 +67,7 @@ const ClickedSection = () => {
       setHeaders(tempHeaderArray);
     }
   };
+  
 
   const handleBackClick = () => {
     const keys = sortedSections.map(([key, value]) => key);
