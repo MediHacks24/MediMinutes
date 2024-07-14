@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { db } from "../firebase"; // Make sure to import your Firebase configuration
+import React, { useState, useEffect, useMemo, use } from "react";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../firebase"; // Adjust the path according to your file structure
+
 import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import Navbar from "./Navbar";
 import { CircularProgress } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../contexts/authContext";
 
 const itemVariants = {
   hidden: { opacity: 0, x: -20 },
@@ -171,6 +174,34 @@ export default function DisplaySections() {
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [sectionDisplayCap, setSectionDisplayCap] = useState(8);
   const [showSideBar, setShowSideBar] = useState(false);
+  const [userID, setUserID] = useState(null);
+  const [completed, setCompleted] = useState([]);
+  const { currentUser } = useAuth();
+  useEffect(() => {
+    console.log(currentUser);
+    if (currentUser) setUserID(currentUser.uid);
+  }, [currentUser]);
+
+  useEffect(() => {
+    console.log(userID);
+    if (userID) {
+      const fetchUserData = async () => {
+        const docRef = doc(db, `users/${userID}`);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          let data = docSnap.data();
+          let completedArray = data.completed;
+          setCompleted(completedArray);
+        }
+      };
+      fetchUserData();
+    }
+  }, [userID]);
+
+  useEffect(() => {
+    console.log(completed);
+  }, [completed]);
 
   useEffect(() => {
     const fetchSectionData = async () => {
@@ -272,13 +303,17 @@ export default function DisplaySections() {
                   {Object.keys(groupedSections).map((letter) => (
                     <div key={letter}>
                       <h3 className="text-4xl font-bold mt-4">{letter}</h3>
-                      {groupedSections[letter].map((section, index) => (
+                      {groupedSections[letter].map((section) => (
                         <Link
-                          key={index}
+                          key={section}
                           href={`/section/${section}`}
                           className="rounded-md"
                         >
-                          <li className="text-lg font-semibold cursor-pointer text-nowrap overflow-hidden text-ellipsis border-b p-2 hover:bg-[#242638] hover:text-white rounded-md">
+                          <li
+                            className={`${
+                              completed.includes(section) ? "bg-green-500 text-white" : "hover:bg-[#242638] hover:text-white"
+                            } text-lg font-semibold cursor-pointer text-nowrap overflow-hidden text-ellipsis border-b p-2  rounded-md`}
+                          >
                             {section}
                           </li>
                         </Link>
@@ -345,11 +380,12 @@ export default function DisplaySections() {
 
             {/* Sections In Selected Category */}
             <motion.div
-            variants={topicsContainer}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="w-full overflow-y-auto flex flex-col gap-y-12 pt-12 bg-[#737487] h-full pb-12">
+              variants={topicsContainer}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="w-full overflow-y-auto flex flex-col gap-y-12 pt-12 bg-[#737487] h-full pb-12"
+            >
               <h2 className="text-6xl font-bold text-white text-center">
                 {selectedCategory}
               </h2>
@@ -363,28 +399,28 @@ export default function DisplaySections() {
                           {category.items.map(
                             (item, index) =>
                               index < sectionDisplayCap && (
-                                  <motion.div
-                                    className="h-20 w-full p-1 px-4 content-center bg-white rounded-md"
-                                    custom={index}
-                                    variants={containerVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
+                                <motion.div
+                                  className={`${completed.includes(item) ? "bg-green-400 text-white" : "bg-white" } h-20 w-full p-1 px-4 content-center rounded-md`}
+                                  custom={index}
+                                  variants={containerVariants}
+                                  initial="hidden"
+                                  animate="visible"
+                                  exit="exit"
+                                  key={index}
+                                >
+                                  <Link
                                     key={index}
+                                    href={`/section/${item}`}
+                                    className=""
                                   >
-                                    <Link
+                                    <li
                                       key={index}
-                                      href={`/section/${item}`}
-                                      className=""
+                                      className=" text-lg"
                                     >
-                                      <li
-                                        key={index}
-                                        className="text-black text-lg"
-                                      >
-                                        {item}
-                                      </li>
-                                    </Link>
-                                  </motion.div>
+                                      {item}
+                                    </li>
+                                  </Link>
+                                </motion.div>
                               )
                           )}
                         </AnimatePresence>

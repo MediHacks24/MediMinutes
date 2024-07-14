@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase"; // Adjust the path according to your file structure
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import ReviewQuiz from "@/components/ReviewQuiz";
+import { useAuth } from "../../../contexts/authContext";
 
 const QuizPage = () => {
   const router = useRouter();
@@ -16,7 +17,9 @@ const QuizPage = () => {
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [reviewQuiz, setReviewQuiz] = useState(false);
-
+  const { currentUser } = useAuth();
+  const [userID, setUserID] = useState(null);
+  const [quizAlreadyDone, setQuizAlreadyDone] = useState(false);
   // You can debug code with blocks like this so see what the new variable becomes when you update a useState
   // useEffect(() => {
   //   console.log(userAnswers);
@@ -72,6 +75,10 @@ const QuizPage = () => {
     fetchData();
   }, [sectionID]);
 
+  useEffect(() => {
+      console.log(currentUser);
+      if (currentUser) setUserID(currentUser.uid);
+  }, [currentUser]);
   // renders while we are waiting for the fetch request above to finish and get the quiz data
   if (!quizData) {
     return <p>Loading...</p>; // put a spinner here eventually
@@ -104,7 +111,7 @@ const QuizPage = () => {
       setuserAnswers(newAnswers);
     }
   };
-  const handleQuizFinished = () => {
+  const handleQuizFinished = async() => {
     if (userAnswers.includes(0)) {
       alert("Please answer all questions before submitting");
     } else {
@@ -112,6 +119,27 @@ const QuizPage = () => {
       for (let i = 0; i < userAnswers.length; i++) {
         if (userAnswers[i] === answerKey[i]) {
           score++;
+        }
+      }
+      if (score === 5) {
+       
+
+
+        const docRef = doc(db, `users/${userID}`);
+        const docSnap = await getDoc(docRef);
+
+        let completedArray;
+        if (docSnap.exists()) {
+          let data = docSnap.data();
+          completedArray = data.completed;
+        }
+        if (completedArray.includes(sectionID)) {
+          setQuizAlreadyDone(true);
+        } else {
+          completedArray.push(sectionID);
+          await setDoc(docRef, 
+            { completed: completedArray },
+            { merge: true });
         }
       }
       setQuizFinished(true);
