@@ -177,11 +177,11 @@ export default function User() {
                           <Link
                             href={`/section/${item}`}
                             key={index}
-                            className="bg-[#242638] flex flex-row rounded-lg justify-between w-full pr-4"
+                            className="hover:bg-[#3d405e] bg-[#242638] flex flex-row rounded-lg justify-between w-full pr-4"
                           >
                             <h1
                               key={index}
-                              className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg"
+                              className="text-3xl  text-white px-10 h-20 flex items-center rounded-lg"
                             >
                               {item}
                             </h1>
@@ -198,11 +198,11 @@ export default function User() {
                         <Link
                           href={`/section/${item}`}
                           key={index}
-                          className="bg-[#242638] flex flex-row rounded-lg justify-between w-full pr-4"
+                          className="hover:bg-[#3d405e] bg-[#242638] flex flex-row rounded-lg justify-between w-full pr-4"
                         >
                           <h1
                             key={index}
-                            className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg"
+                            className="text-3xl  text-white px-10 h-20 flex items-center rounded-lg"
                           >
                             {item}
                           </h1>
@@ -216,10 +216,10 @@ export default function User() {
 
                     {section === "All" &&
                       allStrings.map((item, index) => (
-                        <Link href={`/section/${item}`} key={index}>
+                        <Link href={`/section/${item}`} key={index} className="bg-[#242638] rounded-lg">
                           <h1
                             key={index}
-                            className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg"
+                            className="hover:bg-[#3d405e] text-3xl  text-white px-10 h-20 flex items-center rounded-lg"
                           >
                             {item}
                           </h1>

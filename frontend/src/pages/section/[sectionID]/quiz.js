@@ -6,6 +6,10 @@ import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import ReviewQuiz from "@/components/ReviewQuiz";
 import { useAuth } from "../../../contexts/authContext";
+import Confetti from 'react-confetti';
+import { useWindowSize } from 'react-use';
+
+
 
 const QuizPage = () => {
   const router = useRouter();
@@ -20,6 +24,8 @@ const QuizPage = () => {
   const { currentUser } = useAuth();
   const [userID, setUserID] = useState(null);
   const [quizAlreadyDone, setQuizAlreadyDone] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const { width, height } = useWindowSize();
   // You can debug code with blocks like this so see what the new variable becomes when you update a useState
   // useEffect(() => {
   //   console.log(userAnswers);
@@ -121,13 +127,13 @@ const QuizPage = () => {
           score++;
         }
       }
-      if (score === 5) {
-       
-
-
+      if (score >= 4) {
+        setShowConfetti(true);
+        
+        
         const docRef = doc(db, `users/${userID}`);
         const docSnap = await getDoc(docRef);
-
+        
         let completedArray;
         if (docSnap.exists()) {
           let data = docSnap.data();
@@ -140,7 +146,8 @@ const QuizPage = () => {
           await setDoc(docRef, 
             { completed: completedArray },
             { merge: true });
-        }
+          }
+        setTimeout(() => setShowConfetti(false), 10000); // Stop confetti after 5 seconds
       }
       setQuizFinished(true);
       setQuizScore(score);
@@ -157,7 +164,9 @@ const QuizPage = () => {
     <div>
       {/* It was wrapped in a div because before I was rendering the nav */}
       <Navbar />
+      
       <div className="pt-[60px] flex flex-row gap-x-12">
+      {showConfetti && <Confetti width={width} height={height} />}
         {/* Side Bar Container */}
         <div className="w-[500px] flex flex-col gap-y-2 calcPageHeight border-r border-black bg-[#E1E1EA]">
           <div className="flex flex-col gap-y-8 pt-8 pl-8 pr-8 w-full ">
@@ -204,7 +213,7 @@ const QuizPage = () => {
                   <li className="ml-6 "> You have unlimited attempts</li>
                   <li className="ml-6 "> Each question has multiple choice answers</li>
                   <li className="ml-6 "> Select an answer for each question</li>
-                  <li className="ml-6 "> If you get 5/5 the quiz will be added to your completed sections on your account</li>
+                  <li className="ml-6 "> If you get at least 4/5 the quiz will be added to your completed sections on your account</li>
                   <li className="ml-6 "> If you get anything less you are able to read the section and try again </li>
                   <button
                   onClick={() => setQuestionIndex(0)}
