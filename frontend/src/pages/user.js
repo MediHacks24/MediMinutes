@@ -48,18 +48,18 @@ export default function user() {
                 <div className="pl-12 pr-20 grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-4 max-h-[550px] overflow-y-auto pb-8 
                 ">
                     { section === "In progress" && 
-                        incompleted.map((item) => (
-                        <h1 className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
+                        incompleted.map((item, index) => (
+                        <h1 key={key} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
                     ))}
 
                     { section === "Completed" && 
-                        completed.map((item) => (
-                        <h1 className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
+                        completed.map((item, index) => (
+                        <h1 key={key} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
                     ))}
 
                     { section === "All" &&
-                        all.map((item) => (
-                        <h1 className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
+                        all.map((item, index) => (
+                        <h1 key={key} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
                     ))}
                 
                    
