@@ -197,21 +197,24 @@ const QuizPage = () => {
 
           {/* Render instructions */}
           {questionIndex === -1 && !quizFinished && (
-            <div className="flex flex-col gap-y-4">
-              <ul className=" list-disc flex flex-col text-2xl gap-y-2 pl-6">
-                <li> This quiz consists of 5 questions</li>
-                <li> You have unlimited attempts</li>
-                <li> Each question has multiple choice answers</li>
-                <li> Select an answer for each question</li>
-                <li> If you get 5/5 the quiz will be added to your completed sections on your account</li>
-                <li> If you get anything less you are able to read the section and try again </li>
-              </ul>
-              <button
-                onClick={() => setQuestionIndex(0)}
-                className="text-2xl greenButton w-[200px]"
-              >
-                Start Quiz
-              </button>
+            <div className="flex flex-col gap-y-64">
+              <div className="flex flex-row">
+                <ul className=" list-disc flex flex-col text-2xl gap-y-2 border border-black self-end pl-8 p-4 rounded-lg ml-[50%]">
+                  <li className="ml-6 "> This quiz consists of 5 questions</li>
+                  <li className="ml-6 "> You have unlimited attempts</li>
+                  <li className="ml-6 "> Each question has multiple choice answers</li>
+                  <li className="ml-6 "> Select an answer for each question</li>
+                  <li className="ml-6 "> If you get 5/5 the quiz will be added to your completed sections on your account</li>
+                  <li className="ml-6 "> If you get anything less you are able to read the section and try again </li>
+                  <button
+                  onClick={() => setQuestionIndex(0)}
+                  className="text-2xl greenButton  w-full mt-4"
+                >   Start Quiz
+                </button>
+                </ul>
+                <img className="w-[590px] pt-[260px] absolute" src="/images/hdFroggy.png" alt="Quiz" />
+              </div>
+     
             </div>
           )}
 
