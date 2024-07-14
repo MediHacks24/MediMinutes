@@ -15,7 +15,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className='w-[100vw] h-[65px] fixed top-0 z-[100] bg-[#242638] border-b border-black'>
+    <nav className='w-[100vw] h-[65px] select-none fixed top-0 z-[100] bg-[#242638] border-b border-black'>
       <div className='items-center flex flex-row gap-x-6 px-8 py-1.5 '>
         <div className='flex-1 text-white h-full'>
             {router.pathname === '/' ? (

@@ -10,6 +10,8 @@
     font-weight: normal;
 }
 
+
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap');
 @font-face {
     font-family: 'Hanken Grotesk';
     src: url('../../public/fonts/static/HankenGrotesk-Regular.ttf') format('opentype');

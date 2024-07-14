@@ -5,6 +5,7 @@ import FetchData from "@/components/FetchData";
 import Navbar from "@/components/Navbar";
 import TestComponent from "@/components/TestComponent";
 import HomePage from "@/components/HomePage";
+import AboutPage from "@/components/AboutPage";
 import OurTeam from '@/components/OurTeam';
 
 export default function Home() {
@@ -20,7 +21,7 @@ export default function Home() {
       }
     }
   }, [router.query]);
-
+//yaaaaaaaaaaa
   return (
     <main className="">
       <Navbar />
@@ -30,12 +31,12 @@ export default function Home() {
       </div>
 
       {/* Make an About component and render in this div */}
-      <div id="About" className="h-[100vh] pt-[70px]">
-        <h2>About section</h2>
+      <div id="About" className="pt-[65px] h-[100vh] max-h-[100vh] bg-[#e1e1ea]">
+        <AboutPage />
       </div>
       
       {/* Make a Features component and render in this div */}
-      <div id="OurTeam" className="h-[100vh] pt-[70px]">
+      <div id="OurTeam" className="h-[100vh] max-w-[100vw] overflow-y-hidden bg-[#e1e1ea] pt-[65px]">
         <OurTeam />
       </div>
       
