@@ -10,14 +10,17 @@ export default function AboutPage() {
 
   return (
    // <div className="flex flex-row justify-start mt-10 p-[15px]">
-   <div className="flex flex-row bg-[#e1e1ea] overflow-hidden justify-end mt-10 pt-[100px]">
-    <div className="text-pretty flex-1 flex flex-col gap-y-2 max-w-[650px] pe-[50px]">
+   <div className="flex flex-row bg-[#e1e1ea] overflow-hidden mt-10 py-[100px]">
+    <div className="flex flex-1 justify-center items-center">
+      <img className="px-[50px]" src='/images/medifrog_about.png' alt=""></img>
+    </div>
+    <div className="flex flex-1 flex-col gap-y-2 pe-[50px]">
         <h1 className="text-3xl font-hanuman pb-[25px]" >{heading}</h1>
         <p className="text-balance tracking-wide text-lg font-hanken pb-[25px]">{body1}</p>
         <h2 className="text-xl font-hanuman pb-[15px]" >{heading2}</h2>
         <p className="text balance tracking-wide text-lg font-hanken pb-[25px]">{body2}</p>
         <h3 className="text-xl font-hanuman pb-[15px]" >{heading3}</h3>
-        <p className="text balance tracking-wide text-lg font-hanken pb-[25px]">{body3}</p>
+        <p className="text balance tracking-wide text-lg font-hanken">{body3}</p>
     </div>
    </div>
   )
