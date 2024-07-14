@@ -10,17 +10,17 @@ export default function Navbar() {
   }
 
   return (
-    <nav className='w-[100vw] h-[65px] fixed top-0 z-[100] bg-[#242638] border-b border-black'>
+    <nav className='w-[100vw] h-[65px] select-none fixed top-0 z-[100] bg-[#242638] border-b border-black'>
       <div className='items-center flex flex-row gap-x-6 px-8 py-1.5 '>
         <div className='flex-1 text-white h-full'>
             {router.pathname === '/' ? (
               <div className='flex flex-row gap-x-0 content-center cursor-pointer'>
-                <img className='size-11 self-center' src='/images/medfrog.png' alt='MediMinutes Logo' />
+                <img className='size-11 self-center' src='/images/medifrog_logo.png' alt='MediMinutes Logo' />
                 <a onClick={() => scrollToSection('Home')} className=' pt-3 px-2 rounded-md text-3xl py-2 HanumanFont'>MediMinutes</a>
               </div>
             ) : (
               <div className='flex flex-row gap-x-0 content-center cursor-pointer'>
-                <img className='size-11 self-center' src='/images/medfrog.png' alt='MediMinutes Logo' />
+                <img className='size-11 self-center' src='/images/medifrog_logo.png' alt='MediMinutes Logo' />
                 <Link href='/' className='px-2 rounded-md text-3xl py-2 pt-3 HanumanFont'>MediMinutes</Link>
             </div>
             ) }

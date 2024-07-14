@@ -8,4 +8,12 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   plugins: [],
+  theme: {
+    extend: {
+      fontFamily: {
+        hanken: ["Hanken Grotesk", "sans-serif"],
+        hanuman: ["Hanuman", "serif"]
+      }
+    }
+  }
 };

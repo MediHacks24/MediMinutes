@@ -4,9 +4,52 @@ import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import Navbar from "./Navbar";
 import { CircularProgress } from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: (index) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: index * 0.1 },
+  }),
+  exit: { opacity: 0, x: 20 },
+};
+const topicsContainer = {
+  hidden: { opacity: 0, y: 300 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      delayChildren: 1,
+      staggerChildren: 0.4,
+    },
+  },
+  exit: { opacity: 0 },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (index) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: (index % 8) * 0.1 },
+  }),
+  exit: { opacity: 0, y: -20 },
+};
 
 const mockCategories = [
-  { id: "Adolescent and Child Health", items: ["Section1", "Section2"] },
+  {
+    id: "Adolescent and Child Health",
+    items: [
+      "Section1",
+      "Section2",
+      "Section1",
+      "Section2",
+      "Section1",
+      "Section2",
+    ],
+  },
   {
     id: "Adult Health",
     items: [
@@ -160,6 +203,17 @@ export default function DisplaySections() {
   const memoizedCategories = useMemo(() => categories, [categories]);
   const memoizedSections = useMemo(() => sections, [sections]);
 
+  const groupedSections = useMemo(() => {
+    return memoizedSections.reduce((acc, section) => {
+      const firstLetter = section[0].toUpperCase();
+      if (!acc[firstLetter]) {
+        acc[firstLetter] = [];
+      }
+      acc[firstLetter].push(section);
+      return acc;
+    }, {});
+  }, [memoizedSections]);
+
   useEffect(() => {
     console.log(memoizedCategories);
   }, [memoizedSections, memoizedCategories]);
@@ -189,8 +243,9 @@ export default function DisplaySections() {
   };
 
   return (
-    <div className="flex flex-col  calcPageHeight max-h-[100vh] w-[100vw] max-w-[100vw] overflow-hidden">
+    <div className="flex flex-col select-none	 calcPageHeight max-h-[100vh] w-[100vw] max-w-[100vw] overflow-hidden">
       <Navbar />
+
       {memoizedSections.length > 0 && memoizedCategories.length > 0 ? (
         <div className="flex flex-row gap-x-8 h-full w-full bg-white">
           {/* Left Container - List All Sections Here */}
@@ -200,25 +255,35 @@ export default function DisplaySections() {
             }`}
           >
             <div
-            onClick={toggleSidebar}
-            className="h-20 w-14 bg-[#242638] absolute rounded-r-full top-1/2 right-[-56px] cursor-pointer flex items-center justify-center"
+              onClick={toggleSidebar}
+              className="h-20 w-14 bg-[#242638] absolute rounded-r-full top-1/2 right-[-56px] cursor-pointer flex items-center justify-center"
             >
-              <img src="/images/right-arrow.png" className={`p-3 invert ${showSideBar ? "rotate-180" : "rotate-0"}`}/>
+              <img
+                src="/images/right-arrow.png"
+                className={`p-3 invert ${
+                  showSideBar ? "rotate-180" : "rotate-0"
+                }`}
+              />
             </div>
             {showSideBar && (
               <div className="flex flex-col gap-y-6">
                 <h2 className="text-3xl">All Topics</h2>
                 <ul className="flex flex-col sidebarHeight overflow-y-scroll pr-4">
-                  {memoizedSections.map((section, index) => (
-                    <Link
-                      key={index}
-                      href={`/section/${section}`}
-                      className="rounded-md"
-                    >
-                      <li className="text-lg font-semibold cursor-pointer text-nowrap overflow-hidden text-ellipsis border-b p-2 hover:bg-[#242638] hover:text-white rounded-md">
-                        {section}
-                      </li>
-                    </Link>
+                  {Object.keys(groupedSections).map((letter) => (
+                    <div key={letter}>
+                      <h3 className="text-4xl font-bold mt-4">{letter}</h3>
+                      {groupedSections[letter].map((section, index) => (
+                        <Link
+                          key={index}
+                          href={`/section/${section}`}
+                          className="rounded-md"
+                        >
+                          <li className="text-lg font-semibold cursor-pointer text-nowrap overflow-hidden text-ellipsis border-b p-2 hover:bg-[#242638] hover:text-white rounded-md">
+                            {section}
+                          </li>
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                 </ul>
               </div>
@@ -231,7 +296,7 @@ export default function DisplaySections() {
             <div className="w-fit text-nowrap flex flex-row gap-x-2 32px] mx-auto pt-8">
               <button
                 onClick={handlePrevious}
-                className=" text-black text-2xl font-semibold p-2 px-4 rounded-md"
+                className=" text-white w-12 m-4 text-2xl font-semibold p-2 px-4 rounded-md cursor-pointer bg-[#242638] hover:bg-gray-500 duration-300 hover:scale-105"
                 disabled={categoryIndex === 0}
               >
                 {`<`}
@@ -246,7 +311,7 @@ export default function DisplaySections() {
                   }} // (width of category + gap) *  number of cards displayed
                 >
                   {memoizedCategories.map((category, index) => (
-                    <li
+                    <motion.li
                       onClick={() => handleCategoryChange(category.id)}
                       key={index}
                       className={`${
@@ -255,15 +320,20 @@ export default function DisplaySections() {
                           : "bg-[#242638] text-white"
                       } text-nowrap text-lg font-semibold cursor-pointer rounded-md p-3 h-[80px]  text-center w-[300px] border flex-shrink-0 flex items-center justify-center hover:scale-105 duration-200`}
                       style={{ outline: "none" }}
+                      custom={index}
+                      variants={itemVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
                     >
                       {category.id}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>
               <button
                 onClick={handleNext}
-                className=" text-black text-2xl font-semibold p-2 px-4 rounded-md"
+                className=" text-white w-12 m-4 text-2xl font-semibold p-2 px-4 rounded-md cursor-pointer bg-[#242638] hover:bg-gray-500 duration-300 hover:scale-105"
                 disabled={
                   categoryIndex > 0 &&
                   categoryIndex >= memoizedCategories.length - 5
@@ -274,7 +344,12 @@ export default function DisplaySections() {
             </div>
 
             {/* Sections In Selected Category */}
-            <div className="w-full overflow-y-auto flex flex-col gap-y-12 pt-12 bg-[#737487] h-full pb-12">
+            <motion.div
+            variants={topicsContainer}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="w-full overflow-y-auto flex flex-col gap-y-12 pt-12 bg-[#737487] h-full pb-12">
               <h2 className="text-6xl font-bold text-white text-center">
                 {selectedCategory}
               </h2>
@@ -283,32 +358,51 @@ export default function DisplaySections() {
                   .filter((category) => category.id === selectedCategory)
                   .map((category, index) => (
                     <div key={index} className="flex flex-col gap-y-4 px-36">
-                      <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-y-6 gap-x-12 w-full  pb-4 ">
-                        {category.items.map(
-                          (item, index) =>
-                            index < sectionDisplayCap && (
-                              <Link
-                                key={index}
-                                href={`/section/${item}`}
-                                className="h-20 w-full p-1 px-4 content-center bg-white  rounded-md"
-                              >
-                                <li className="text-black text-lg">{item}</li>
-                              </Link>
-                            )
-                        )}
+                      <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-y-6 gap-x-12 w-full pb-4">
+                        <AnimatePresence>
+                          {category.items.map(
+                            (item, index) =>
+                              index < sectionDisplayCap && (
+                                  <motion.div
+                                    className="h-20 w-full p-1 px-4 content-center bg-white rounded-md"
+                                    custom={index}
+                                    variants={containerVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                    key={index}
+                                  >
+                                    <Link
+                                      key={index}
+                                      href={`/section/${item}`}
+                                      className=""
+                                    >
+                                      <li
+                                        key={index}
+                                        className="text-black text-lg"
+                                      >
+                                        {item}
+                                      </li>
+                                    </Link>
+                                  </motion.div>
+                              )
+                          )}
+                        </AnimatePresence>
                       </ul>
                     </div>
                   ))}
               </div>
-              
-                {categories.find(element => element.id === selectedCategory)?.items.length > sectionDisplayCap && 
-                <button onClick={() => setSectionDisplayCap(sectionDisplayCap + 8)}
-                className="bg-[#20AC58] text-white text-2xl font-semibold text-center p-2 px-4 rounded-lg border border-black w-[200px] mx-auto hover:scale-110 duration-200"
-              >
-                Show More
-              </button>}
-              
-            </div>
+
+              {categories.find((element) => element.id === selectedCategory)
+                ?.items.length > sectionDisplayCap && (
+                <button
+                  onClick={() => setSectionDisplayCap(sectionDisplayCap + 8)}
+                  className="bg-[#20AC58] text-white text-2xl font-semibold text-center p-2 px-4 rounded-lg border border-black w-[200px] mx-auto hover:scale-110 duration-200"
+                >
+                  Show More
+                </button>
+              )}
+            </motion.div>
           </div>
         </div>
       ) : (
