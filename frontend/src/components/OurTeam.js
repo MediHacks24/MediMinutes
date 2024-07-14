@@ -1,10 +1,12 @@
 import React from "react";
 
 export default function OurTeam() {
+  const aboutTeam = "Get to know the passionate individuals driving our mission to demystify health terminology and empower understanding. Together, we're dedicated to making complex medical knowledge accessible and meaningful for everyone.";
   return (
-    <div className="relative h-screen w-screen">
+    <div className="relative h-screen w-screen flex flex-col  calcPageHeight max-h-[100vh] max-w-[100vw] overflow-hidden">
       <img src="images/teamPageBackground.png" alt="Background Image" className="absolute inset-0 h-full w-full object-cover"/> 
       <h1 className="absolute top-[130px] right-[220px] text-8xl font-bold text-black z-10 HanumanFont border-l-2 border-b-4 border-black pl-[20px]">Meet Our Team</h1>
+      <p className="absolute top-[250px] right-[30px] left-[950px] text-2xl font-lighter text-black z-10 pl-[20px]">{aboutTeam}</p>
 
       <div className="flex justify-center items-center h-full w-full relative gap-x-[140px]">
         <div className="flex flex-col items-center">
