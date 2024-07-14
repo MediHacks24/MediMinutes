@@ -200,7 +200,11 @@ const QuizPage = () => {
             <div className="flex flex-col gap-y-4">
               <ul className=" list-disc flex flex-col text-2xl gap-y-2 pl-6">
                 <li> This quiz consists of 5 questions</li>
+                <li> You have unlimited attempts</li>
                 <li> Each question has multiple choice answers</li>
+                <li> Select an answer for each question</li>
+                <li> If you get 5/5 the quiz will be added to your completed sections on your account</li>
+                <li> If you get anything less you are able to read the section and try again </li>
               </ul>
               <button
                 onClick={() => setQuestionIndex(0)}
