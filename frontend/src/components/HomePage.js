@@ -10,7 +10,7 @@ export default function HomePage() {
     <div className="flex flex-row overflow-hidden justify-center gap-x-64 h-full px-20 pt-32">
       <div className="flex-[3] flex flex-col gap-y-2 h-full">
         <div className="flex flex-col  mx-auto gap-y-6">
-          <h1 className="text-5xl xl:text-7xl font-bold leading-none max-w-[700px]">{heading}</h1>
+          <h1 className="text-4xl sm:text-5xl xl:text-7xl font-bold leading-none max-w-[700px]">{heading}</h1>
           <h2 className="font-light w-[80%] text-lg lg:text-xl xl:text-2xl">{subheading}</h2>
           <div className="flex flex-row justify-between md:justify-normal gap-x-10 mt-4">
             
