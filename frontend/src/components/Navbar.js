@@ -1,9 +1,14 @@
-import Link from 'next/link'
 import React from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useAuth } from '../contexts/authContext';
+
 
 export default function Navbar() {
   const router = useRouter();
+
+  const { currentUser } = useAuth();
+
 
   const scrollToSection = (section) => {
     document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
@@ -41,8 +46,19 @@ export default function Navbar() {
           )}
         </div>
         <div className='flex-[1] flex flex-row h-full gap-x-4 content-center text-white rounded-md px-5 justify-end'>
+          {!currentUser ? (
+            <>
           <Link href='/login' className='fontWhite py-2'>Log In</Link>
           <Link href='/signup' className='bg-[#20AC58] px-5 rounded-md py-2'>Sign Up</Link>
+
+          </>
+          ) : (
+            <Link href='/user'>
+            <img className='size-11 self-center invert' src='/images/account_circle.png' alt='Profile Logo' />
+            </Link>
+          )}
+
+
         </div>
       </div>
     </nav>
