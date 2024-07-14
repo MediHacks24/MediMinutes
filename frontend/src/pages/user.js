@@ -11,7 +11,7 @@ import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 
 
 export default function User() {
-    const [section, setSection] = useState("In progress");
+    const [section, setSection] = useState("Completed");
     const router = useRouter();
     const [username, setUsername] = useState('');
     const [completed, setCompleted] = useState([]);
@@ -122,9 +122,9 @@ export default function User() {
             <div className="flex flex-col gap-y-10">
                 <div className="flex flex-row justify-between text-2xl pl-12 pr-24 pt-10 ">
                     <div className="flex flex-row gap-x-10">
+                    <h1 onClick={() => setSection("Completed")} className={`${section === "Completed" ? "underline" : "" } hover:cursor-pointer`}>Completed</h1>
+                    <h1 onClick={() => setSection("In progress")} className={`${section === "In progress" ? "underline" : "" } hover:cursor-pointer`}>Incomplete</h1>
                       <h1 onClick={() => setSection("All")} className={`${section === "All" ? "underline" : "" } hover:cursor-pointer`}>All</h1>
-                      <h1 onClick={() => setSection("In progress")} className={`${section === "In progress" ? "underline" : "" } hover:cursor-pointer`}>Incomplete</h1>
-                      <h1 onClick={() => setSection("Completed")} className={`${section === "Completed" ? "underline" : "" } hover:cursor-pointer`}>Completed</h1>
                     </div>
                     
                     <button
@@ -143,15 +143,17 @@ export default function User() {
                         allStrings
                         .filter(allStrings => !completed.includes(allStrings))
                         .map((item, index) => (
-                          <Link href={`/section/${item}`} key={index}>
+                          <Link href={`/section/${item}`} key={index} className="bg-[#242638] flex flex-row rounded-lg justify-between w-full pr-4">
                             <h1 key={index} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
-                          </Link>
+                            <img src={`/images/incomplete.png`} alt="MediMinutes Logo" className="bg-cover h-12 self-center" />
+                        </Link>
                         ))}
 
                     { section === "Completed" && 
                         completed.map((item, index) => (
-                          <Link href={`/section/${item}`} key={index}>
-                        <h1 key={index} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
+                          <Link href={`/section/${item}`} key={index} className="bg-[#242638] flex flex-row rounded-lg justify-between w-full pr-4">
+                            <h1 key={index} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
+                            <img src={`/images/greenCheck.png`} alt="MediMinutes Logo" className="bg-cover h-12 self-center " />
                         </Link>
                       ))}
 
