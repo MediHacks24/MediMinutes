@@ -31,12 +31,12 @@ export default function Home() {
       </div>
 
       {/* Make an About component and render in this div */}
-      <div id="About" className="pt-[70px]">
+      <div id="About" className="pt-[65px] h-[100vh] max-h-[100vh] bg-[#e1e1ea]">
         <AboutPage />
       </div>
       
       {/* Make a Features component and render in this div */}
-      <div id="OurTeam" className="h-[100vh] pt-[70px]">
+      <div id="OurTeam" className="h-[100vh] max-w-[100vw] overflow-y-hidden bg-[#e1e1ea] pt-[65px]">
         <OurTeam />
       </div>
       
