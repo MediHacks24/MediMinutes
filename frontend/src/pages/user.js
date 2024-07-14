@@ -1,5 +1,8 @@
 import Navbar from "@/components/Navbar";
 import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
+import Link from 'next/link'
+import { useAuth } from '../contexts/authContext'
 
 const all = [
     "Abuse", "Abortion", "Adolescent Pregnancy", "Adoption", "Aging", "Alcohol", "Anxiety", "Autism", "Bipolar Disorder", "Bullying", "Cancer", "Caregiving", "Child Abuse", "Chronic Illness", "Chronic Pain", "Cognitive Disorders", "College Mental Health", "Coping", "Cultural Competence", "Depression", "Disability", "Disaster", "Divorce", "Domestic Violence", "Eating Disorders", "Elderly", "Emotional Health", "Family Conflict", "Family Stress", "Financial Stress", "Grief", "Happiness", "Healthy Living", "HIV/AIDS", "Homelessness", "Infertility", "Learning Disabilities", "LGBTQ", "Loneliness"
@@ -11,8 +14,28 @@ const incompleted = [
     "Abortion", "Bullying", "Autism"
 ]
 
+
+
 export default function User() {
     const [section, setSection] = useState("In progress");
+
+    const { logout, currentUser } = useAuth();
+    const [error, setError] = useState('');
+
+
+    async function handleLogout() {
+      setError('');
+
+      try {
+        await logout();
+        router.push('/login');
+      } catch {
+        setError('Failed to logout')
+      }
+
+    }
+
+
 
   return (
     <div className="h-[100vh] w-[100vw] max-w-[100vw] max-h-[100vh] overflow-hidden">
@@ -30,10 +53,9 @@ export default function User() {
               <img src="/images/account_circle.png" alt="MediMinutes Logo"  
               className="bg-[#E1E1EA] size-60 rounded-full mt-[-120px]"></img>
               <div className="flex flex-col gap-y-8 text-3xl w-[70%] min-w-[200px]">
-                <input type='text' placeholder="Username" className=" bg-none border-b-2 border-l-2 p-2 text-white bg-[#242638] border-[#20AC58]"/>
-                <input type='email' placeholder="Email" className=" bg-none border-b-2 border-l-2 p-2 text-white bg-[#242638] border-[#20AC58]"/>
-                <input type='password' placeholder="Edit Password" className=" bg-none border-b-2 border-l-2 p-2 text-white bg-[#242638] border-[#20AC58]"/>
-                <button className="bg-[#20AC58] text-white p-2 rounded-lg hover:scale-105 cursor-pointer">Save Changes</button>
+              <strong className="bg-[#242638] border-b-2 border-l-2 p-2 text-white border-[#20AC58]">{currentUser ? currentUser.email : 'Loading...'}</strong>
+              <strong className="bg-[#242638] border-b-2 border-l-2 p-2 text-white border-[#20AC58]">{currentUser ? currentUser.email : 'Loading...'}</strong>
+                <Link href='/updateprofile' className="bg-[#20AC58] text-white p-2 rounded-lg hover:scale-105 cursor-pointer">Update Profile</Link>
               </div>
             </div>
           </div>
@@ -44,6 +66,14 @@ export default function User() {
                     <h1 onClick={() => setSection("All")} className="hover:cursor-pointer">All</h1>
                     <h1 onClick={() => setSection("In progress")} className="hover:cursor-pointer">In progress</h1>
                     <h1 onClick={() => setSection("Completed")} className="hover:cursor-pointer">Completed</h1>
+                    
+                    <button
+                    variant="link"
+                    onClick={handleLogout}
+                    className="mt-6 p-2 bg-[rgb(32,172,88)] text-white px-2 py-2 rounded-xl w-full max-w-md">Log Out
+                    </button>
+
+
                 </div>
                 <div className="pl-12 pr-20 grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-4 max-h-[550px] overflow-y-auto pb-8 
                 ">

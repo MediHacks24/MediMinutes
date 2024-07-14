@@ -53,8 +53,9 @@ export default function Navbar() {
 
           </>
           ) : (
+            <Link href='/user'>
             <img className='size-11 self-center invert' src='/images/account_circle.png' alt='Profile Logo' />
-
+            </Link>
           )}
 
 

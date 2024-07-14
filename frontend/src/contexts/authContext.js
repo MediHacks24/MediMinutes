@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, updatePassword } from "firebase/auth";
+import { collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore"; 
 
 import { auth } from '../firebase'
 
@@ -22,12 +23,20 @@ export function AuthProvider({ children }) {
     }
 
     function logout() {
-        return signOut()
+        return signOut(auth)
     }
     
     function resetPassword(email)
     {
         return sendPasswordResetEmail(auth, email)
+    }
+
+    function updatesEmail(email){
+        return updateEmail(auth.currentUser,email)
+    }
+
+    function updatesPassword(password){
+        return updatePassword(auth.currentUser,password)
     }
 
     useEffect(() => {
@@ -45,7 +54,9 @@ export function AuthProvider({ children }) {
         login,
         logout,
         signup,
-        resetPassword
+        resetPassword,
+        updatesEmail,
+        updatesPassword
     }
     
     return (
