@@ -120,11 +120,11 @@ export default function User() {
             {/*  Right Bottom container */}
           <div className="flex-[3] bg-[#E1E1EA]">
             <div className="flex flex-col gap-y-10">
-                <div className="flex flex-row justify-between text-2xl pl-12 pr-24 pt-10 underline">
+                <div className="flex flex-row justify-between text-2xl pl-12 pr-24 pt-10 ">
                     <div className="flex flex-row gap-x-10">
-                      <h1 onClick={() => setSection("All")} className="hover:cursor-pointer">All</h1>
-                      <h1 onClick={() => setSection("In progress")} className="hover:cursor-pointer">Incomplete</h1>
-                      <h1 onClick={() => setSection("Completed")} className="hover:cursor-pointer">Completed</h1>
+                      <h1 onClick={() => setSection("All")} className={`${section === "All" ? "underline" : "" } hover:cursor-pointer`}>All</h1>
+                      <h1 onClick={() => setSection("In progress")} className={`${section === "In progress" ? "underline" : "" } hover:cursor-pointer`}>Incomplete</h1>
+                      <h1 onClick={() => setSection("Completed")} className={`${section === "Completed" ? "underline" : "" } hover:cursor-pointer`}>Completed</h1>
                     </div>
                     
                     <button
@@ -137,6 +137,8 @@ export default function User() {
                 </div>
                 <div className="pl-12 pr-20 grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-4 max-h-[520px] overflow-y-auto pb-8 
                 ">
+
+
                     { section === "In progress" && 
                         allStrings
                         .filter(allStrings => !completed.includes(allStrings))
