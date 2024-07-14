@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase"; // Adjust the path according to your file structure
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import ReviewQuiz from "@/components/ReviewQuiz";
+import { useAuth } from "../../../contexts/authContext";
 
 const QuizPage = () => {
   const router = useRouter();
@@ -16,7 +17,9 @@ const QuizPage = () => {
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [reviewQuiz, setReviewQuiz] = useState(false);
-
+  const { currentUser } = useAuth();
+  const [userID, setUserID] = useState(null);
+  const [quizAlreadyDone, setQuizAlreadyDone] = useState(false);
   // You can debug code with blocks like this so see what the new variable becomes when you update a useState
   // useEffect(() => {
   //   console.log(userAnswers);
@@ -72,6 +75,10 @@ const QuizPage = () => {
     fetchData();
   }, [sectionID]);
 
+  useEffect(() => {
+      console.log(currentUser);
+      if (currentUser) setUserID(currentUser.uid);
+  }, [currentUser]);
   // renders while we are waiting for the fetch request above to finish and get the quiz data
   if (!quizData) {
     return <p>Loading...</p>; // put a spinner here eventually
@@ -104,7 +111,7 @@ const QuizPage = () => {
       setuserAnswers(newAnswers);
     }
   };
-  const handleQuizFinished = () => {
+  const handleQuizFinished = async() => {
     if (userAnswers.includes(0)) {
       alert("Please answer all questions before submitting");
     } else {
@@ -112,6 +119,27 @@ const QuizPage = () => {
       for (let i = 0; i < userAnswers.length; i++) {
         if (userAnswers[i] === answerKey[i]) {
           score++;
+        }
+      }
+      if (score === 5) {
+       
+
+
+        const docRef = doc(db, `users/${userID}`);
+        const docSnap = await getDoc(docRef);
+
+        let completedArray;
+        if (docSnap.exists()) {
+          let data = docSnap.data();
+          completedArray = data.completed;
+        }
+        if (completedArray.includes(sectionID)) {
+          setQuizAlreadyDone(true);
+        } else {
+          completedArray.push(sectionID);
+          await setDoc(docRef, 
+            { completed: completedArray },
+            { merge: true });
         }
       }
       setQuizFinished(true);
@@ -169,17 +197,24 @@ const QuizPage = () => {
 
           {/* Render instructions */}
           {questionIndex === -1 && !quizFinished && (
-            <div className="flex flex-col gap-y-4">
-              <ul className=" list-disc flex flex-col text-2xl gap-y-2 pl-6">
-                <li> This quiz consists of 5 questions</li>
-                <li> Each question has multiple choice answers</li>
-              </ul>
-              <button
-                onClick={() => setQuestionIndex(0)}
-                className="text-2xl greenButton w-[200px]"
-              >
-                Start Quiz
-              </button>
+            <div className="flex flex-col gap-y-64">
+              <div className="flex flex-row">
+                <ul className=" list-disc flex flex-col text-2xl gap-y-2 border border-black self-end pl-8 p-4 rounded-lg ml-[50%]">
+                  <li className="ml-6 "> This quiz consists of 5 questions</li>
+                  <li className="ml-6 "> You have unlimited attempts</li>
+                  <li className="ml-6 "> Each question has multiple choice answers</li>
+                  <li className="ml-6 "> Select an answer for each question</li>
+                  <li className="ml-6 "> If you get 5/5 the quiz will be added to your completed sections on your account</li>
+                  <li className="ml-6 "> If you get anything less you are able to read the section and try again </li>
+                  <button
+                  onClick={() => setQuestionIndex(0)}
+                  className="text-2xl greenButton  w-full mt-4"
+                >   Start Quiz
+                </button>
+                </ul>
+                <img className="w-[590px] pt-[260px] absolute" src="/images/hdFroggy.png" alt="Quiz" />
+              </div>
+     
             </div>
           )}
 

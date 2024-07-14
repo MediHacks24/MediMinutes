@@ -28,7 +28,7 @@ export default function OurTeam() {
           <img src="images/aiden_grey.png" alt="Image" className="w-[160px] h-[170px] aspect-square absolute pt-[10px] rounded-3xl"/>
           <div className="relative">
             <div className="absolute inset-0 bg-[#F1D09F] transform -skew-y-12 clip-path-polygon -my-1 -mx-8 rounded-3xl "></div>
-            <p className="relative z-10 font-lighter text-4xl font-helvetica bg-[#5C3722] text-white p-5 -mx-6 rounded-2xl">Backend Developer</p>
+            <p className="relative z-10 font-lighter text-4xl font-helvetica bg-[rgb(245,169,18)] text-white p-5 -mx-6 rounded-2xl">Backend Developer</p>
           </div>
           <p className="font-bold text-5xl font-helvetica mt-[35px]">Aiden Mitchell</p>
         </div>
