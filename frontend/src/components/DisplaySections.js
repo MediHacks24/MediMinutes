@@ -370,6 +370,7 @@ export default function DisplaySections() {
                                     initial="hidden"
                                     animate="visible"
                                     exit="exit"
+                                    key={index}
                                   >
                                     <Link
                                       key={index}
