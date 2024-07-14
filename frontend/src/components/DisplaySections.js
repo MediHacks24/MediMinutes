@@ -363,7 +363,6 @@ export default function DisplaySections() {
                           {category.items.map(
                             (item, index) =>
                               index < sectionDisplayCap && (
-                                <AnimatePresence>
                                   <motion.div
                                     className="h-20 w-full p-1 px-4 content-center bg-white rounded-md"
                                     custom={index}
@@ -385,7 +384,6 @@ export default function DisplaySections() {
                                       </li>
                                     </Link>
                                   </motion.div>
-                                </AnimatePresence>
                               )
                           )}
                         </AnimatePresence>
