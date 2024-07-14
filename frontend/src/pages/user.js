@@ -11,7 +11,7 @@ const incompleted = [
     "Abortion", "Bullying", "Autism"
 ]
 
-export default function user() {
+export default function User() {
     const [section, setSection] = useState("In progress");
 
   return (
@@ -49,17 +49,17 @@ export default function user() {
                 ">
                     { section === "In progress" && 
                         incompleted.map((item, index) => (
-                        <h1 key={key} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
+                        <h1 key={index} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
                     ))}
 
                     { section === "Completed" && 
                         completed.map((item, index) => (
-                        <h1 key={key} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
+                        <h1 key={index} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
                     ))}
 
                     { section === "All" &&
                         all.map((item, index) => (
-                        <h1 key={key} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
+                        <h1 key={index} className="text-3xl bg-[#242638] text-white px-10 h-20 flex items-center rounded-lg">{item}</h1>
                     ))}
                 
                    
