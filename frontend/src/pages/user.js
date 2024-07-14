@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import { useAuth } from '../contexts/authContext'
+import { db } from "../firebase"; // Make sure to import your Firebase configuration
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
+
 
 const all = [
     "Abuse", "Abortion", "Adolescent Pregnancy", "Adoption", "Aging", "Alcohol", "Anxiety", "Autism", "Bipolar Disorder", "Bullying", "Cancer", "Caregiving", "Child Abuse", "Chronic Illness", "Chronic Pain", "Cognitive Disorders", "College Mental Health", "Coping", "Cultural Competence", "Depression", "Disability", "Disaster", "Divorce", "Domestic Violence", "Eating Disorders", "Elderly", "Emotional Health", "Family Conflict", "Family Stress", "Financial Stress", "Grief", "Happiness", "Healthy Living", "HIV/AIDS", "Homelessness", "Infertility", "Learning Disabilities", "LGBTQ", "Loneliness"
@@ -18,10 +21,42 @@ const incompleted = [
 
 export default function User() {
     const [section, setSection] = useState("In progress");
-
+    const router = useRouter();
+    const [username, setUsername] = useState('');
+    const [userDoc, setUserDoc] = useState('');
     const { logout, currentUser } = useAuth();
     const [error, setError] = useState('');
 
+
+    useEffect(() => {
+      console.log(userDoc)
+    },[userDoc])
+
+    useEffect(() => {
+      if (!currentUser) {
+          router.push('/');
+      } else {
+          // Fetch additional user data (username) from Firestore
+          async function fetchUserData() {
+              try {
+                  const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+                  console.log(JSON.stringify(userDoc))
+
+                  if (userDoc.exists()) {
+                      setUserDoc(userDoc)
+                      setUsername(userDoc.data().username);
+                  } else {
+                      setUsername('Username not found');
+                  }
+              } catch (error) {
+                  console.error('Error fetching user data:', error);
+                  setUsername('Error fetching username');
+              }
+          }
+
+          fetchUserData();
+      }
+  }, [currentUser, router]);
 
     async function handleLogout() {
       setError('');
@@ -35,6 +70,9 @@ export default function User() {
 
     }
 
+    if (!currentUser) {
+      return null; // Or a loading spinner
+  }
 
 
   return (
@@ -54,7 +92,7 @@ export default function User() {
               className="bg-[#E1E1EA] size-60 rounded-full mt-[-120px]"></img>
               <div className="flex flex-col gap-y-8 text-3xl w-[70%] min-w-[200px]">
               <strong className="bg-[#242638] border-b-2 border-l-2 p-2 text-white border-[#20AC58]">{currentUser ? currentUser.email : 'Loading...'}</strong>
-              <strong className="bg-[#242638] border-b-2 border-l-2 p-2 text-white border-[#20AC58]">{currentUser ? currentUser.email : 'Loading...'}</strong>
+              <strong className="bg-[#242638] border-b-2 border-l-2 p-2 text-white border-[#20AC58]">{username ? username : 'Loading...'}</strong>
                 <Link href='/updateprofile' className="bg-[#20AC58] text-white p-2 rounded-lg hover:scale-105 cursor-pointer">Update Profile</Link>
               </div>
             </div>

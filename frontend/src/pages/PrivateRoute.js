@@ -1,21 +1,22 @@
-// Import necessary modules
-import { useRouter } from 'next/router'; // Import useRouter from next/router
-import { useAuth } from '@/contexts/authContext'; // Adjust path as needed
+import { useRouter } from 'next/router';
+import { useAuth } from '../contexts/authContext';
+import React, { useState, useEffect } from "react";
+
 
 function PrivateRoute({ children }) {
   const { currentUser } = useAuth();
-  const router = useRouter(); // Initialize router using useRouter
+  const router = useRouter();
 
-  // Array of protected routes
-  const protectedRoutes = ['/user', '/updateprofile'];
+  useEffect(() => {
+    if (!currentUser) {
+      router.push('/');
+    }
+  }, [currentUser, router]);
 
-  // Check if user is authenticated, redirect to login if not
-  if (!currentUser && protectedRoutes.includes(router.pathname)) {
-    router.push('/login');
+  if (!currentUser) {
     return null;
   }
 
-  // Render children if user is authenticated
   return children;
 }
 

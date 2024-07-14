@@ -5,15 +5,17 @@ import SignUp from "./signup";
 import Login from "./login";
 import User from "./user";
 import HomePage from "@/components/HomePage";
-import PrivateRoute from './PrivateRoute'; // Import PrivateRoute component
 import React from "react";
+import PrivateRoute from "./PrivateRoute"; // Import the PrivateRoute component
+
+
 
 function App({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Component {...pageProps} />
 
-      {/* Example navigation links */}
+      {/* Example navigation links
       <nav>
         <ul>
           <li>
@@ -32,21 +34,9 @@ function App({ Component, pageProps }) {
             <a href="/updateprofile" onClick={() => router.push('/updateprofile')}>Update Profile</a>
           </li>
         </ul>
-      </nav>
+      </nav> */}
 
-      {/* Example routing logic */}
-      <PrivateRoute>
-        <HomePage />
-      </PrivateRoute>
-      <PrivateRoute>
-        <Login />
-      </PrivateRoute>
-      <PrivateRoute>
-        <SignUp />
-      </PrivateRoute>
-      <PrivateRoute>
-        <User />
-      </PrivateRoute>
+
     </AuthProvider>
   );
 }

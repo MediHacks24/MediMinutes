@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, updatePassword } from "firebase/auth";
 import { collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore"; 
+import { db } from "../firebase"; // Make sure to import your Firebase configuration
+
 
 import { auth } from '../firebase'
 
@@ -14,12 +16,37 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null)
     const [loading, setLoading] = useState(true)
 
-    function signup(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password)
+    async function signup(email, password, username) {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+    
+            // Construct document reference
+            const docRef = doc(db, `users/${user.uid}`);
+    
+            // Set document data
+            await setDoc(docRef, {
+                username: username,
+                completed: []
+            });
+    
+            // Update current user state
+            setCurrentUser(user);
+    
+            return user;
+        } catch (error) {
+            // Handle signup errors here
+            console.error("Error signing up:", error);
+            throw error; // Rethrow the error for handling in your component
+        }
     }
 
-    function login(email, password) {
-        return signInWithEmailAndPassword(auth, email, password)
+
+
+
+    async function login(email, password) {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        return userCredential.user;
     }
 
     function logout() {
@@ -39,6 +66,19 @@ export function AuthProvider({ children }) {
         return updatePassword(auth.currentUser,password)
     }
 
+    async function updateUserProfile(data) {
+        const userDoc = doc(db, "users", auth.currentUser.uid);
+        return updateDoc(userDoc, data);
+    }
+
+    async function getUserData() {
+        if (!auth.currentUser) return null;
+        const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        return userDoc.exists() ? userDoc.data() : null;
+    }
+
+
+
     useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
         setCurrentUser(user)
@@ -56,7 +96,9 @@ export function AuthProvider({ children }) {
         signup,
         resetPassword,
         updatesEmail,
-        updatesPassword
+        updatesPassword,
+        updateUserProfile,
+        getUserData
     }
     
     return (

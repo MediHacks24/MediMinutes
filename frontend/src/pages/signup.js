@@ -9,6 +9,7 @@ export default function SignUp() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  const usernameRef = useRef();
   const { signup, currentUser } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,11 +23,13 @@ export default function SignUp() {
     }
     console.log(emailRef.current.value)
     console.log(passwordRef.current.value)
+    console.log(usernameRef.current.value)
+
     
       setError('');
       setLoading(true);
     try {
-      await signup(emailRef.current.value, passwordRef.current.value); // Assuming signup takes email and password
+      await signup(emailRef.current.value, passwordRef.current.value, usernameRef.current.value); // Assuming signup takes email and password
       router.push('/');
     } catch (error) {
       // You might want to handle successful signup redirection or notification here
@@ -53,6 +56,18 @@ export default function SignUp() {
             required
             name="email"
             placeholder="frogger55@swampmail.com"
+            className="px-2 py-2 rounded-xl border border-gray-300"
+          />
+        </div>
+
+        <div className="flex flex-col gap-y-1">
+          <label htmlFor="username" className="text-lg">Username</label>
+          <input
+            type="text"
+            ref={usernameRef}
+            required
+            name="username"
+            placeholder="frogbiter747"
             className="px-2 py-2 rounded-xl border border-gray-300"
           />
         </div>
