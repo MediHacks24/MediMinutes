@@ -31,7 +31,7 @@ export default function Home() {
       </div>
 
       {/* Make an About component and render in this div */}
-      <div id="About" className="pt-[65px] h-[100vh] max-h-[100vh] bg-[#e1e1ea]">
+      <div id="About" className="pt-[0px] h-[100vh] bg-[#e1e1ea]">
         <AboutPage />
       </div>
       
