@@ -10,12 +10,40 @@
     font-weight: normal;
 }
 
-* { 
-    font-family: Hanuman; 
+
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+    font-family: 'Hanken Grotesk';
+    src: url('../../public/fonts/static/HankenGrotesk-Regular.ttf') format('opentype');
+    font-style: normal;
+    font-weight: normal;
 }
 
 
-@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap');
+.HanumanFont {
+    font-family: 'Hanuman';
+}
+
+* {
+    /* font-family: Verdana; */
+    /* font-family: Helvetica; */
+    font-family: 'Hanken Grotesk';
+
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+  }
+   
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+   
+::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 10px;
+  }
 
 
 .cardContainer {
@@ -30,8 +58,13 @@
 }
 
 .calcPageHeight {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 65px);
 }
+
+.sidebarHeight {
+    height: calc(100vh - 180px);
+}
+
 
 .greenButton {
     background-color: #20AC58;
@@ -90,3 +123,86 @@
     transition: 0.3s;
     cursor: pointer;
 }
+
+/* Add this CSS to your styles */
+@keyframes brainAnimation {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  .animate-brain {
+    animation: brainAnimation 0.7s ease-in-out;
+  }
+
+  .TopicHover {
+      transition: 0.3s;
+    }
+    
+    .TopicHover:hover {
+        background-color: #C47976;
+        transition: 0.3s;
+        color: white;
+    }
+  
+  
+  
+  .fontWhite {
+    color: #E1E1EA;
+  }
+
+
+  @keyframes slideIn {
+    0% {
+      transform: translateY(-100%);
+      opacity: 1;
+      scale: 0.5;
+    }
+
+    20% {
+      transform: translateY(0);
+      opacity: 1;
+      scale: 0.5;
+
+    }
+
+    40% {
+      transform: rotate(20deg);
+      opacity: 1;
+      scale: 0.5;
+
+    }
+
+    60% {
+      transform: rotate(0deg);
+      opacity: 1;
+      scale: 0.5;
+
+    }
+
+    80% {
+      transform: rotate(-20deg);
+      opacity: 1;
+      scale: 0.5;
+
+    }
+
+
+    100% {
+      transform: rotate(0deg);
+      opacity: 1;
+      scale: 1;
+
+    }
+  }
+  
+  .frog-animation {
+    animation: slideIn 1s ease-in-out;
+  }
+  
