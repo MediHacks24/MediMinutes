@@ -4,9 +4,52 @@ import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import Navbar from "./Navbar";
 import { CircularProgress } from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: (index) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: index * 0.1 },
+  }),
+  exit: { opacity: 0, x: 20 },
+};
+const topicsContainer = {
+  hidden: { opacity: 0, y: 300 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      delayChildren: 1,
+      staggerChildren: 0.4,
+    },
+  },
+  exit: { opacity: 0 },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (index) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: (index % 8) * 0.1 },
+  }),
+  exit: { opacity: 0, y: -20 },
+};
 
 const mockCategories = [
-  { id: "Adolescent and Child Health", items: ["Section1", "Section2"] },
+  {
+    id: "Adolescent and Child Health",
+    items: [
+      "Section1",
+      "Section2",
+      "Section1",
+      "Section2",
+      "Section1",
+      "Section2",
+    ],
+  },
   {
     id: "Adult Health",
     items: [
@@ -151,10 +194,10 @@ export default function DisplaySections() {
       }
     };
 
-    fetchSectionData();
-    fetchCategoryData();
-    // setSections(mockSections);
-    // setCategories(mockCategories);
+    // fetchSectionData();
+    // fetchCategoryData();
+    setSections(mockSections);
+    setCategories(mockCategories);
   }, []);
 
   const memoizedCategories = useMemo(() => categories, [categories]);
@@ -202,6 +245,7 @@ export default function DisplaySections() {
   return (
     <div className="flex flex-col select-none	 calcPageHeight max-h-[100vh] w-[100vw] max-w-[100vw] overflow-hidden">
       <Navbar />
+
       {memoizedSections.length > 0 && memoizedCategories.length > 0 ? (
         <div className="flex flex-row gap-x-8 h-full w-full bg-white">
           {/* Left Container - List All Sections Here */}
@@ -267,7 +311,7 @@ export default function DisplaySections() {
                   }} // (width of category + gap) *  number of cards displayed
                 >
                   {memoizedCategories.map((category, index) => (
-                    <li
+                    <motion.li
                       onClick={() => handleCategoryChange(category.id)}
                       key={index}
                       className={`${
@@ -276,9 +320,14 @@ export default function DisplaySections() {
                           : "bg-[#242638] text-white"
                       } text-nowrap text-lg font-semibold cursor-pointer rounded-md p-3 h-[80px]  text-center w-[300px] border flex-shrink-0 flex items-center justify-center hover:scale-105 duration-200`}
                       style={{ outline: "none" }}
+                      custom={index}
+                      variants={itemVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
                     >
                       {category.id}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>
@@ -295,7 +344,12 @@ export default function DisplaySections() {
             </div>
 
             {/* Sections In Selected Category */}
-            <div className="w-full overflow-y-auto flex flex-col gap-y-12 pt-12 bg-[#737487] h-full pb-12">
+            <motion.div
+            variants={topicsContainer}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="w-full overflow-y-auto flex flex-col gap-y-12 pt-12 bg-[#737487] h-full pb-12">
               <h2 className="text-6xl font-bold text-white text-center">
                 {selectedCategory}
               </h2>
@@ -304,19 +358,37 @@ export default function DisplaySections() {
                   .filter((category) => category.id === selectedCategory)
                   .map((category, index) => (
                     <div key={index} className="flex flex-col gap-y-4 px-36">
-                      <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-y-6 gap-x-12 w-full  pb-4 ">
-                        {category.items.map(
-                          (item, index) =>
-                            index < sectionDisplayCap && (
-                              <Link
-                                key={index}
-                                href={`/section/${item}`}
-                                className="h-20 w-full p-1 px-4 content-center bg-white  rounded-md"
-                              >
-                                <li className="text-black text-lg">{item}</li>
-                              </Link>
-                            )
-                        )}
+                      <ul className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-y-6 gap-x-12 w-full pb-4">
+                        <AnimatePresence>
+                          {category.items.map(
+                            (item, index) =>
+                              index < sectionDisplayCap && (
+                                <AnimatePresence>
+                                  <motion.div
+                                    className="h-20 w-full p-1 px-4 content-center bg-white rounded-md"
+                                    custom={index}
+                                    variants={containerVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                  >
+                                    <Link
+                                      key={index}
+                                      href={`/section/${item}`}
+                                      className=""
+                                    >
+                                      <li
+                                        key={index}
+                                        className="text-black text-lg"
+                                      >
+                                        {item}
+                                      </li>
+                                    </Link>
+                                  </motion.div>
+                                </AnimatePresence>
+                              )
+                          )}
+                        </AnimatePresence>
                       </ul>
                     </div>
                   ))}
@@ -331,7 +403,7 @@ export default function DisplaySections() {
                   Show More
                 </button>
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
       ) : (
