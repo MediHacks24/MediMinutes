@@ -101,7 +101,7 @@ export default function User() {
       <div className="pt-[65px] flex flex-col h-full">
         <div className="h-60 bg-[#242638] 
         ">
-          <img className="bg-cover min-h-60" src="/images/healthImage.png" alt="MediMinutes Logo" />
+          <img className="bg-cover min-h-60" src="/images/profilePageBanner.png" alt="MediMinutes Logo" />
         </div>
         {/*  Bototm container */}
         <div className="flex flex-row h-full">
