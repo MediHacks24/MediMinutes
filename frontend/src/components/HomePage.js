@@ -30,7 +30,7 @@ export default function HomePage() {
       </div>
       <div className="flex-[2] hidden xl:flex flex-col gap-y-2 h-full relative w-full min-w-[400px]">
         <div className="absolute inset-[-20px] bg-[#D1C5DD]  w-[90%] aspect-square  rounded-3xl z-10"></div>
-        <img src="images/homePageImage.png" alt="Image" className="w-[90%] aspect-square absolute inset-0 rounded-3xl z-20"/>
+        <img src="images/homePageImage.png" alt="Image" className="w-[90%] aspect-square absolute inset-0 rounded-3xl z-20 object-cover"/>
         <img src="images/yellowCircle.png" alt="Image" className="w-[18%] absolute inset-[-55px] rounded-3xl z-20"/> 
 
 
