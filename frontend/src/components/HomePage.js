@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import { useAuth } from '../contexts/authContext'
+
 
 export default function HomePage() {
+  const {currentUser } = useAuth();
+
   const heading = "Expand Your Health Vocabulary and Test Your Knowledge:";
   const subheading =
     "Empower yourself with essential health knowledge through interactive learning modules and quizzes. Understand diseases and health terminology to enhance your well-being.";
@@ -15,7 +19,11 @@ export default function HomePage() {
           <div className="flex flex-row justify-between md:justify-normal gap-x-10 mt-4">
             
             <Link href="/categories" className="w-[25%] min-w-[150px] bg-[rgb(32,172,88)] hover:bg-[#20AC58] text-white font-bold rounded-xl text-2xl hover:scale-110 duration-200 text-center py-2">Demo</Link>
-            <Link href="/signup" className="w-[25%] min-w-[150px] text-black font-bold py-2 rounded-xl border border-black text-2xl hover:scale-110 duration-200 text-center">Sign Up</Link>
+            {!currentUser ? (
+  <Link href="/signup" className="w-[25%] min-w-[150px] text-black font-bold py-2 rounded-xl border border-black text-2xl hover:scale-110 duration-200 text-center">Sign Up</Link>
+) : (
+  <Link href="/user" className="w-[25%] min-w-[150px] text-black font-bold py-2 rounded-xl border border-black text-2xl hover:scale-110 duration-200 text-center">View Profile</Link>
+)}
             
             </div>
         </div>

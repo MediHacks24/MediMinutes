@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../contexts/authContext';
 import { Alert } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -14,6 +14,7 @@ export default function SignUp() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -109,6 +110,10 @@ export default function SignUp() {
       <div className="w-100 text-center mt-2">
         Already Have An Account?
         <Link href='/login' style={{ color: 'rgb(32,172,88)' }} className='text-green-rgb(32,172,88) px-1 rounded-md py-1'>Log In Here</Link>
+        </div>
+
+        <div className="w-100 text-center mt-2">
+        <Link href='/' style={{ color: 'rgb(32,172,88)' }} className='text-green-rgb(32,172,88) px-1 rounded-md py-1'>Go Back</Link>
    
       </div>
     </div>
