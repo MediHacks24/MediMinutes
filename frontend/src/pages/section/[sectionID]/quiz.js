@@ -209,6 +209,7 @@ const QuizPage = () => {
             <div className="flex flex-col gap-y-64">
               <div className="flex flex-row">
                 <ul className=" list-disc flex flex-col text-2xl gap-y-2 border border-black self-end pl-8 p-4 rounded-lg ml-[50%]">
+                  <h1 className="text-center text-4xl font-bold">Instructions</h1>
                   <li className="ml-6 "> This quiz consists of 5 questions</li>
                   <li className="ml-6 "> You have unlimited attempts</li>
                   <li className="ml-6 "> Each question has multiple choice answers</li>
@@ -248,11 +249,12 @@ const QuizPage = () => {
                 </div>
               ) : (
                 <div className="mt-[8%] flex flex-col justify-center text-center gap-y-4 w-full">
-                  <h1 className="text-5xl font-bold">Congratulations</h1>
-                  <h2 className="text-2xl">You have completed the quiz</h2>
+                  <h1 className="text-5xl font-bold">{`${Math.round((quizScore / 5) * 100) >= 80 ? "Congratulations!" : "Nice try!"}`}</h1>
+                  <h2 className="text-2xl">You have finished the quiz</h2>
 
-                  <h2 className="">Quiz Score: {quizScore} / 5</h2>
-                  <h2>{Math.round((quizScore / 5) * 100)}%</h2>
+                  <h2 className="text-2xl">Quiz Score: {quizScore} / 5</h2>
+                  <h2 className="text-2xl font-bold">{Math.round((quizScore / 5) * 100)}%</h2>
+                  <h2 className="text-2xl">{`${Math.round((quizScore / 5) * 100) >= 80 ? "Congrat's you received credit for this section. It will appear on your profile as comeplete!" : "To complete this section you must score 80% or above!"}`}</h2>
                   <div className="flex flex-col gap-y-3 items-center self-center w-[40%]">
                     <button
                       onClick={() => handleReviewClick()}
