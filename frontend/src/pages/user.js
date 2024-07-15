@@ -210,14 +210,13 @@ export default function User() {
 
                     {section === "All" &&
                       allStrings.map((item, index) => (
-                        <Link href={`/section/${item}`} key={index} className="hover:bg-[#3d405e] bg-[#242638] rounded-lg flex flex-row justify-between">
+                        <Link href={`/section/${item}`} key={index} className="bg-[#242638] rounded-lg">
                           <h1
                             key={index}
-                            className=" text-3xl  text-white px-10 h-20 flex items-center rounded-lg"
+                            className="hover:bg-[#3d405e] text-3xl  text-white px-10 h-20 flex items-center rounded-lg"
                           >
                             {item}
                           </h1>
-                          <img src={`${completed.includes(item) ? "/images/greenCheck.png" : "/images/incomplete.png"}`} alt="MediMinutes Logo" className="bg-cover h-12 self-center pr-4" />
                         </Link>
                       ))}
                   </div>
