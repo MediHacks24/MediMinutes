@@ -90,15 +90,9 @@ export default function User() {
     <div className="h-[100vh] w-[100vw] max-w-[100vw] max-h-[100vh] overflow-hidden">
       <Navbar />
       <div className="pt-[65px] flex flex-col h-full">
-        <div
-          className="h-60 bg-[#242638] 
-        "
-        >
-          <img
-            className="bg-cover min-h-60"
-            src="/images/healthImage.png"
-            alt="MediMinutes Logo"
-          />
+        <div className="h-60 bg-[#242638] 
+        ">
+          <img className="bg-cover min-h-60 w-screen" src="/images/profilePageBanner.png" alt="MediMinutes Logo" />
         </div>
         {/*  Bototm container */}
         <div className="flex flex-row h-full">
@@ -216,13 +210,14 @@ export default function User() {
 
                     {section === "All" &&
                       allStrings.map((item, index) => (
-                        <Link href={`/section/${item}`} key={index} className="bg-[#242638] rounded-lg">
+                        <Link href={`/section/${item}`} key={index} className="hover:bg-[#3d405e] bg-[#242638] rounded-lg flex flex-row justify-between">
                           <h1
                             key={index}
-                            className="hover:bg-[#3d405e] text-3xl  text-white px-10 h-20 flex items-center rounded-lg"
+                            className=" text-3xl  text-white px-10 h-20 flex items-center rounded-lg"
                           >
                             {item}
                           </h1>
+                          <img src={`${completed.includes(item) ? "/images/greenCheck.png" : "/images/incomplete.png"}`} alt="MediMinutes Logo" className="bg-cover h-12 self-center pr-4" />
                         </Link>
                       ))}
                   </div>
